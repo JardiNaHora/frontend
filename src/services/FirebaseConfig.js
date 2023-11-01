@@ -1,12 +1,15 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBv7M0cKyq-IeSWpSos2b4jF-1jIikprKc",
-  authDomain: "projeto-jardineira.firebaseapp.com",
-  projectId: "projeto-jardineira",
-  storageBucket: "projeto-jardineira.appspot.com",
-  messagingSenderId: "540401877071",
-  appId: "1:540401877071:web:d337dec96bd43eb573aa3a"
+  apiKey: "AIzaSyCPqvnR4YaH1ZWrMw0aA6ogboIULyJYX7w",
+  authDomain: "jardi-na-hora.firebaseapp.com",
+  projectId: "jardi-na-hora",
+  storageBucket: "jardi-na-hora.appspot.com",
+  messagingSenderId: "56263297141",
+  appId: "1:56263297141:web:a9f8330b03aef04be7d03c",
+  measurementId: "G-XM7DXE5RHL",
 };
-
-export const app = initializeApp(firebaseConfig);
+// export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);

@@ -1,22 +1,15 @@
 import { useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthGoogleContext } from "../../contexts/authGoogle";
-import { initializeApp } from "firebase/app";
+import { auth } from "../../services/FirebaseConfig";
 import "firebase/auth";
-import axios from 'axios';
+import axios from "axios";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
-import './styles.css';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBv7M0cKyq-IeSWpSos2b4jF-1jIikprKc",
-  authDomain: "projeto-jardineira.firebaseapp.com",
-  projectId: "projeto-jardineira",
-  storageBucket: "projeto-jardineira.appspot.com",
-  messagingSenderId: "540401877071",
-  appId: "1:540401877071:web:d337dec96bd43eb573aa3a"
-};
-
-const app = initializeApp(firebaseConfig);
+import "./styles.css";
 
 export const Login = () => {
   const { signInGoogle, signed } = useContext(AuthGoogleContext);
@@ -28,43 +21,67 @@ export const Login = () => {
 
   async function handleLoginFromGoogle() {
     const result = await signInGoogle();
-    
+
     if (result) {
       const user = result.users[0];
-      
+
       const data = {
         nome: user.displayName,
         email: user.email,
-        senha: 'senha-aleatoria' // substitua por uma senha adequada
+        senha: "senha-aleatoria", // substitua por uma senha adequada
       };
-      
+
       try {
-        await axios.post('http://localhost:8080/usuario', data);
+        await axios.post("http://localhost:8080/usuario", data);
         // O usuário foi cadastrado com sucesso no banco de dados
       } catch (error) {
-        console.error('Erro ao cadastrar o usuário no banco de dados', error);
+        console.error("Erro ao cadastrar o usuário no banco de dados", error);
       }
     }
   }
-  
+
+  const signUp = (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const handleRegister = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/usuario', { email, password });
+      const response = await axios.post("http://localhost:8080/usuario", {
+        email,
+        password,
+      });
       // O registro foi bem-sucedido
     } catch (error) {
       setError(error.message);
     }
   };
-  
-  
 
+  const signIn = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(signed);
+  };
   const handleLogin = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/usuario/d0dd1bb5-72db-4124-bb84-d5952270146e');
+      const response = await axios.get(
+        "http://localhost:8080/usuario/d0dd1bb5-72db-4124-bb84-d5952270146e"
+      );
       if (response.data.password === password) {
         // O login foi bem-sucedido
       } else {
-        setError('Email ou senha incorretos');
+        setError("Email ou senha incorretos");
       }
     } catch (error) {
       setError(error.message);
@@ -73,8 +90,10 @@ export const Login = () => {
 
   const handleForgotPassword = async () => {
     try {
-      await app.auth().sendPasswordResetEmail(email);
-      alert("Um email de redefinição de senha foi enviado para o seu endereço de email.");
+      await auth.sendPasswordResetEmail(email);
+      alert(
+        "Um email de redefinição de senha foi enviado para o seu endereço de email."
+      );
     } catch (error) {
       setError(error.message);
     }
@@ -86,7 +105,13 @@ export const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>{isRegistering ? "Registrar" : isForgotPassword ? "Esqueci minha senha" : "Login"}</h2>
+      <h2>
+        {isRegistering
+          ? "Registrar"
+          : isForgotPassword
+          ? "Esqueci minha senha"
+          : "Login"}
+      </h2>
       {error && <div className="error-message">{error}</div>}
       <div className="input-container">
         <input
@@ -103,11 +128,11 @@ export const Login = () => {
         />
       </div>
       {isRegistering ? (
-        <button onClick={handleRegister}>Registrar</button>
+        <button onClick={(handleRegister, signUp)}>Registrar</button>
       ) : isForgotPassword ? (
         <button onClick={handleForgotPassword}>Redefinir Senha</button>
       ) : (
-        <button onClick={handleLogin}>Login</button>
+        <button onClick={(handleLogin, signIn)}>Login</button>
       )}
       {!isRegistering && !isForgotPassword && (
         <p>
@@ -118,7 +143,9 @@ export const Login = () => {
       {!isForgotPassword && (
         <p>
           Esqueceu sua senha?{" "}
-          <span onClick={() => setIsForgotPassword(true)}>Esqueci minha senha</span>
+          <span onClick={() => setIsForgotPassword(true)}>
+            Esqueci minha senha
+          </span>
         </p>
       )}
       <button onClick={handleLoginFromGoogle}>Logar com o Google</button>
