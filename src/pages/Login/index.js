@@ -1,92 +1,91 @@
-import { useState, useContext } from "react";
-import { Navigate } from "react-router-dom";
-import { AuthGoogleContext } from "../../contexts/authGoogle";
-import { initializeApp } from "firebase/app";
-import "firebase/auth";
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-import './styles.css';
+import { useNavigate } from "react-router-dom";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBv7M0cKyq-IeSWpSos2b4jF-1jIikprKc",
-  authDomain: "projeto-jardineira.firebaseapp.com",
-  projectId: "projeto-jardineira",
-  storageBucket: "projeto-jardineira.appspot.com",
-  messagingSenderId: "540401877071",
-  appId: "1:540401877071:web:d337dec96bd43eb573aa3a"
-};
-
-const app = initializeApp(firebaseConfig);
+import "./styles.css";
 
 export const Login = () => {
-  const { signInGoogle, signed } = useContext(AuthGoogleContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [user, setUser] = useState(null);
+  const [authenticated, setAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
-  async function handleLoginFromGoogle() {
-    const result = await signInGoogle();
-    
-    if (result) {
-      const user = result.users[0];
-      
-      const data = {
-        nome: user.displayName,
-        email: user.email,
-        senha: 'senha-aleatoria' // substitua por uma senha adequada
-      };
-      
-      try {
-        await axios.post('http://localhost:8080/usuario', data);
-        // O usuário foi cadastrado com sucesso no banco de dados
-      } catch (error) {
-        console.error('Erro ao cadastrar o usuário no banco de dados', error);
-      }
-    }
-  }
-  
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+  // Função para iniciar o login com o Google
+  const handleLoginWithGoogle = () => {
+    // Redireciona o usuário para o endpoint de autenticação do Google no backend
+    window.location.href = BACKEND_URL+"/oauth2/authorization/google";
+  };
+
   const handleRegister = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/usuario', { email, password });
+      const response = await axios.post(process.env.REACT_APP_BACKEND_URL+"/usuario", {
+        email,
+        password,
+      });
       // O registro foi bem-sucedido
     } catch (error) {
       setError(error.message);
     }
   };
-  
-  
 
   const handleLogin = async () => {
+    // Implemente a lógica de login aqui. Após o login bem-sucedido, defina o estado "authenticated" como true.
+    // Você pode usar um serviço de autenticação ou verificar um token de autenticação, por exemplo.
+
     try {
-      const response = await axios.get('http://localhost:8080/usuario/d0dd1bb5-72db-4124-bb84-d5952270146e');
-      if (response.data.password === password) {
-        // O login foi bem-sucedido
+      // Realize o login, por exemplo, enviando uma solicitação ao seu backend com as credenciais do usuário.
+      const response = await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify({ username: "usuário", password: "senha" }), // Substitua por suas credenciais
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        // Login bem-sucedido, defina o estado "authenticated" como true.
+        setAuthenticated(true);
+        navigate("/home");
       } else {
-        setError('Email ou senha incorretos');
+        console.error("Erro no login:", response.statusText);
       }
     } catch (error) {
-      setError(error.message);
+      console.error("Erro ao fazer login:", error);
     }
   };
 
-  const handleForgotPassword = async () => {
+  // Função para obter informações do usuário após o login bem-sucedido
+  const fetchUserInfo = async () => {
     try {
-      await app.auth().sendPasswordResetEmail(email);
-      alert("Um email de redefinição de senha foi enviado para o seu endereço de email.");
+      const response = await axios.get(process.env.REACT_APP_BACKEND_URL+"/home/auth"); // Endpoint no backend para obter informações do usuário
+      console.log(response);
+      setUser(response.data); // Define as informações do usuário no estado
     } catch (error) {
-      setError(error.message);
+      console.error("Erro ao obter informações do usuário", error);
     }
   };
 
-  if (signed) {
-    return <Navigate to="/Home" />;
-  }
+  useEffect(() => {
+    // Verifica se o usuário já está autenticado após o carregamento da página
+    fetchUserInfo();
+  }, []);
 
   return (
     <div className="login-container">
-      <h2>{isRegistering ? "Registrar" : isForgotPassword ? "Esqueci minha senha" : "Login"}</h2>
+      <h2>
+        {isRegistering
+          ? "Registrar"
+          : isForgotPassword
+          ? "Esqueci minha senha"
+          : "Login"}
+      </h2>
       {error && <div className="error-message">{error}</div>}
       <div className="input-container">
         <input
@@ -105,7 +104,7 @@ export const Login = () => {
       {isRegistering ? (
         <button onClick={handleRegister}>Registrar</button>
       ) : isForgotPassword ? (
-        <button onClick={handleForgotPassword}>Redefinir Senha</button>
+        <button>Redefinir Senha</button>
       ) : (
         <button onClick={handleLogin}>Login</button>
       )}
@@ -118,10 +117,13 @@ export const Login = () => {
       {!isForgotPassword && (
         <p>
           Esqueceu sua senha?{" "}
-          <span onClick={() => setIsForgotPassword(true)}>Esqueci minha senha</span>
+          <span onClick={() => setIsForgotPassword(true)}>
+            Esqueci minha senha
+          </span>
         </p>
       )}
-      <button onClick={handleLoginFromGoogle}>Logar com o Google</button>
+      {/* Botão para fazer login com o Google */}
+      <button onClick={handleLoginWithGoogle}>Logar com o Google</button>
     </div>
   );
 };
