@@ -1,4 +1,4 @@
-# Sistema de Monitoramento da Jardineira - Frontend
+# JardiNaHora - Frontend
 
 ## Visão Geral
 
