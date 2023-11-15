@@ -42,7 +42,7 @@ export const Home = () => {
 
   return (
     <div>
-      {true ? (
+      {isAuthenticated ? (
         <div>
           <button
             onClick={() => {
