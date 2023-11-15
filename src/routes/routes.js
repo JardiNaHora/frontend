@@ -12,6 +12,7 @@ export const AppRoutes = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
         </Routes>
+        {/* <Home /> */}
       </Fragment>
     </BrowserRouter>
   );
