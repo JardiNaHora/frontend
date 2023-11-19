@@ -73,7 +73,7 @@ export const Map = () => {
     <div className="map">
       <GoogleMap
         mapContainerStyle={{ height: "100%", width: "100%" }}
-        zoom={15.5}
+        zoom={16}
         center={center}
         options={{
           styles: mapStyles,
@@ -93,16 +93,21 @@ export const Map = () => {
           />
         )}
 
-        {response && directionsRendererOptions && (
+        {response && directionsRendererOptions && true && (
           <DirectionsRenderer options={directionsRendererOptions} />
         )}
         <Marker
           position={ifce}
+          icon={"https://img.icons8.com/?size=36&id=79416&format=png"}
           options={{ label: { text: "IFCE", className: "marker" } }}
         />
         <Marker
+          position={jardineira}
+          icon={"https://img.icons8.com/?size=36&id=37860&format=png"}
+        />
+        <Marker
           position={metro}
-          icon={"https://img.icons8.com/?size=36&id=16556&format=png"}
+          icon={"https://img.icons8.com/?size=36&id=16693&format=png"}
           options={{
             label: { text: "Virgílio Távora", className: "marker" },
           }}

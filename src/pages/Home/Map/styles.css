@@ -1,6 +1,7 @@
 .map {
-  height: 400px;
-  width: 400px;
+  padding: 15px;
+  height: 65vh;
+  width: 100vw;
 }
 
 .marker {

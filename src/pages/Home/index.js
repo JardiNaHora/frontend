@@ -11,6 +11,10 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const Home = () => {
   const [user, setUser] = useState(null);
+  const [sentido, setSentido] = useState("Campus → Metrô");
+  const [partida, setPartida] = useState("7:40");
+  const [chegada, setChegada] = useState("7:55");
+  const [viagem, setViagem] = useState("3 de 4");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,9 +22,13 @@ export const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/home/auth", { withCredentials: true })
+      .get(BACKEND_URL + "/home/auth", { withCredentials: true })
       .then((response) => {
-        if (response.data.auth.details.sessionId) {
+        console.log(response);
+        if (
+          response.data.auth.details.sessionId &&
+          response.data.auth.authorities[0].authority === "USER"
+        ) {
           dispatch(setAuthenticated(true));
         } else {
           dispatch(setAuthenticated(false));
@@ -43,22 +51,29 @@ export const Home = () => {
   return (
     <div>
       {isAuthenticated ? (
-        <div>
-          <button
-            onClick={() => {
-              window.location.href = "http://localhost:8080/logout";
-            }}
-          >
-            sair
-          </button>
-
-          <Map />
+        <div className="container">
+          <div className="header">
+            <button
+              onClick={() => {
+                window.location.href = BACKEND_URL + "/logout";
+              }}
+            >
+              sair
+            </button>
+          </div>
+          <div className="body">
+            <p>🚐 Sentido: {sentido}</p>
+            <Map />
+            <p>
+              🕒Partida: {partida} / 🕒Chegada: {chegada}
+            </p>
+            <p>🚐 Viagem: {viagem}</p>
+          </div>
         </div>
       ) : (
         <button
           onClick={() => {
-            window.location.href =
-              "http://localhost:8080/oauth2/authorization/google";
+            window.location.href = BACKEND_URL + "/oauth2/authorization/google";
           }}
         >
           Logar com o Google
