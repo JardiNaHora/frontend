@@ -1,9 +1,23 @@
-.header {
-  display: flex;
-  justify-content: flex-end;
-}
-.body {
+.root {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+@media (max-width: 600px) {
+  .map {
+    height: 200px;
+  }
 }
