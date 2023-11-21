@@ -1,50 +1,42 @@
-import React, { useState, useMemo, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Map from "./Map/index.js";
 
-import {
-  GoogleMap,
-  useLoadScript,
-  DirectionsService,
-  DirectionsRenderer,
-  Marker,
-} from "@react-google-maps/api";
-
-import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../store/slice";
 import { useNavigate } from "react-router-dom";
 
-const libraries = ["places", "directions"];
-const jardineira = { lat: -3.869545, lng: -38.61568 }; // jardineira
-const center = { lat: -3.869545, lng: -38.61568 }; // central overview
-const ifce = { lat: -3.871737, lng: -38.612374 }; // IFCE campus Maracanaú
-const metro = { lat: -3.867573, lng: -38.619985 }; // Estação Metrofor Virgílio Távora
+// Importando os componentes do material-ui
+import { styled } from "@mui/material/styles";
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Typography,
+  Grid,
+  Paper,
+  Box,
+} from "@mui/material";
+
+import "./styles.css";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Estilo personalizado para o mapa
-const mapStyles = [
-  {
-    featureType: "transit",
-    elementType: "all",
-    stylers: [{ visibility: "off" }], // mudar pra 'on' mostra as estações
-  },
-  {
-    featureType: "poi",
-    elementType: "labels",
-    stylers: [{ visibility: "off" }],
-  },
-];
+// Criando um hook para definir os estilos personalizados
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
+
+const StyledMap = styled(Box)(({ theme }) => ({
+  height: "300px",
+  width: "100%",
+  border: "1px solid #ccc",
+  borderRadius: "4px",
+}));
 
 export const Home = () => {
-  //teste
-  const [jardineira, setJardineira] = useState({
-    lat: -3.869545,
-    lng: -38.61568,
-  });
-  const [origin, setOrigin] = useState(jardineira);
-  const [destination, setDestination] = useState(metro);
-  const [response, setResponse] = useState(null);
   const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
@@ -55,6 +47,7 @@ export const Home = () => {
     axios
       .get("http://localhost:8080/home/auth", { withCredentials: true })
       .then((response) => {
+        console.log(response);
         if (response.data.auth.details.sessionId) {
           dispatch(setAuthenticated(true));
         } else {
@@ -68,106 +61,69 @@ export const Home = () => {
           error
         );
       });
-  }, [dispatch, navigate]);  
+  }, [dispatch, navigate]);
 
   const logout = async () => {
     // Redireciona o usuário para o endpoint de autenticação do Google no backend
     window.location.href = BACKEND_URL + "/logout";
   };
 
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
-    libraries,
-  });
-
-  //teste
-  const directionsServiceOptions = useMemo(() => {
-    return {
-      origin,
-      destination,
-      travelMode: "DRIVING",
-    };
-  }, [origin, destination]);
-
-  const directionsCallback = useCallback((res) => {
-    if (res !== null && res.status === "OK") {
-      setResponse(res);
-    } else {
-      console.log(res);
-    }
-  }, []);
-
-  const directionsRendererOptions = useMemo(() => {
-    return {
-      markerOptions: { visible: false },
-      directions: response,
-    };
-  }, [response]);
-  //
-
-  if (loadError) return "Error loading maps";
-  if (!isLoaded) return "Loading Maps";
-
   return (
-    <div>
+    <div className={"root"}>
       {isAuthenticated ? (
-        <div>
-          <button
-            onClick={() => {
-              window.location.href = "http://localhost:8080/logout";
-            }}
-          >
-            sair
-          </button>
-          <div className="map">
-            <GoogleMap
-              mapContainerStyle={{ height: "100%", width: "100%" }}
-              zoom={15.5}
-              center={center}
-              options={{
-                styles: mapStyles,
-                //buttons
-                mapTypeControl: false,
-                scaleControl: false,
-                streetViewControl: false,
-                rotateControl: false,
-                fullscreenControl: false,
-              }}
-              clickableIcons={false}
-            >
-              {jardineira && destination && (
-                <DirectionsService
-                  options={directionsServiceOptions}
-                  callback={directionsCallback}
-                />
-              )}
-
-              {response && directionsRendererOptions && (
-                <DirectionsRenderer options={directionsRendererOptions} />
-              )}
-              <Marker
-                position={ifce}
-                options={{ label: { text: "IFCE", className: "marker" } }}
-              />
-              <Marker
-                position={metro}
-                icon={"https://img.icons8.com/?size=36&id=16556&format=png"}
-                options={{
-                  label: { text: "Virgílio Távora", className: "marker" },
+        <div className="container">
+          <AppBar position="static">
+            <Toolbar>
+              <Typography variant="h6" className={"title"}>
+                Olá, {user}!
+              </Typography>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  window.location.href = BACKEND_URL + "/logout";
                 }}
-              />
-            </GoogleMap>
-          </div>
+              >
+                sair
+              </Button>
+            </Toolbar>
+          </AppBar>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <StyledPaper>
+                <Typography variant="h5">🚐 Sentido: Campus → Metrô</Typography>
+              </StyledPaper>
+            </Grid>
+            <Grid item xs={12}>
+              <StyledPaper>
+                <StyledMap>
+                  <Map />
+                </StyledMap>
+              </StyledPaper>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <StyledPaper>
+                <Typography variant="h5">
+                  🕒Partida: 7:40 / 🕒Chegada: 7:55
+                </Typography>
+              </StyledPaper>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <StyledPaper>
+                <Typography variant="h5">🚐 Viagem: 3 de 4</Typography>
+              </StyledPaper>
+            </Grid>
+          </Grid>
         </div>
       ) : (
-        <button
+        <Button
+          variant="contained"
+          color="primary"
           onClick={() => {
-            window.location.href =
-              "http://localhost:8080/oauth2/authorization/google";
+            window.location.href = BACKEND_URL + "/oauth2/authorization/google";
           }}
         >
           Logar com o Google
-        </button>
+        </Button>
       )}
     </div>
   );

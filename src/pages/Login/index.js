@@ -20,15 +20,18 @@ export const Login = () => {
   // Função para iniciar o login com o Google
   const handleLoginWithGoogle = () => {
     // Redireciona o usuário para o endpoint de autenticação do Google no backend
-    window.location.href = BACKEND_URL+"/oauth2/authorization/google";
+    window.location.href = BACKEND_URL + "/oauth2/authorization/google";
   };
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post(process.env.REACT_APP_BACKEND_URL+"/usuario", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        process.env.REACT_APP_BACKEND_URL + "/usuario",
+        {
+          email,
+          password,
+        }
+      );
       // O registro foi bem-sucedido
     } catch (error) {
       setError(error.message);
@@ -64,7 +67,9 @@ export const Login = () => {
   // Função para obter informações do usuário após o login bem-sucedido
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get(process.env.REACT_APP_BACKEND_URL+"/home/auth"); // Endpoint no backend para obter informações do usuário
+      const response = await axios.get(
+        process.env.REACT_APP_BACKEND_URL + "/home/auth"
+      ); // Endpoint no backend para obter informações do usuário
       console.log(response);
       setUser(response.data); // Define as informações do usuário no estado
     } catch (error) {
