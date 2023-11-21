@@ -1,0 +1,7 @@
+.historicoContainer {
+  width: 40vw;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #020202;
+  padding: 10px;
+}
