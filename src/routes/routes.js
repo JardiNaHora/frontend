@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { History } from "../pages/History";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
+import { Adm } from "../pages/Adm";
+import { NewReport } from "../pages/Report/New";
 
 export const AppRoutes = () => {
   return (
@@ -12,7 +14,9 @@ export const AppRoutes = () => {
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/history" element={<History />} />
+          <Route path="/histoico-viagens" element={<History />} />
+          <Route path="/adm" element={<Adm />} />
+          <Route path="/gerar-relatorio" element={<NewReport />} />
         </Routes>
       </Fragment>
     </BrowserRouter>
