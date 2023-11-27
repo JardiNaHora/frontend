@@ -1,8 +1,9 @@
-import { Fragment } from "react";
+import { React, Fragment } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { History } from "../pages/History";
-import { Home } from "../pages/Home";
+
 import { Login } from "../pages/Login";
+import { Home } from "../pages/Home";
+import { History } from "../pages/History";
 
 export const AppRoutes = () => {
   return (
