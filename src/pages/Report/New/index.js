@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DatePicker from "react-datepicker";
+import ReactDatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ptBR from "date-fns/locale/pt-BR";
+
 import "./styles.css";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -11,21 +13,28 @@ import { useNavigate } from "react-router-dom";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const NewReport = () => {
-  //recebendo o dia de hoje
-  const date = new Date();
-  // Obtendo dia, mês e ano
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Mês começa do zero, então é necessário adicionar 1
-  const year = date.getFullYear();
-  // Criando a string no formato desejado
-  const formattedDate = `${day}/${month}/${year}`;
-
+  registerLocale("ptBR", ptBR);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [obs, setObs] = useState("");
+  const [autor, setAutor] = useState(null);
+  const formulario = {
+    dataInicial: startDate,
+    dataFinal: endDate,
+    obs: obs,
+    autor: autor,
+  };
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Faça o que você quiser com o objeto JSON, por exemplo, enviar para um servidor
+    console.log(formulario);
+  };
 
   useEffect(() => {
     axios
@@ -74,7 +83,7 @@ export const NewReport = () => {
               <div className="datas">
                 <div className="data data-inicio">
                   <label htmlFor="start">Data de inicio: </label>
-                  <DatePicker
+                  <ReactDatePicker
                     className="date-picker"
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
@@ -84,14 +93,14 @@ export const NewReport = () => {
                     dateFormat={"dd/MM/yyyy"}
                     placeholderText="dd/mm/aaaa"
                     // shouldCloseOnSelect={false}
-                    locale="pt-BR"
+                    locale="ptBR"
                     required
                     form="relatorio"
                   />
                 </div>
                 <div className="data data-fim">
                   <label htmlFor="end">Data de fim: </label>
-                  <DatePicker
+                  <ReactDatePicker
                     className="date-picker"
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
@@ -102,15 +111,21 @@ export const NewReport = () => {
                     dateFormat={"dd/MM/yyyy"}
                     placeholderText="dd/mm/aaaa"
                     // shouldCloseOnSelect={false}
-                    locale="pt-BR"
+                    locale="ptBR"
                     required
                     form="relatorio"
                   />
                 </div>
               </div>
-              <form id="relatorio">
+              <form onSubmit={handleSubmit} id="relatorio">
                 <label htmlFor="obs">Observação:</label>
-                <textarea id="obs" placeholder="Opcional" rows="4"></textarea>
+                <textarea
+                  id="obs"
+                  placeholder="Opcional"
+                  rows="4"
+                  value={obs}
+                  onChange={(e) => setObs(e.target.value)}
+                ></textarea>
                 <div className="botoes">
                   <input type="reset" />
                   <input type="submit" />
