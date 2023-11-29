@@ -11,7 +11,7 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../../store/slice";
 import { useNavigate } from "react-router-dom";
-import CardLista from "./Card";
+import CardLista from "../../../components/Card";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
