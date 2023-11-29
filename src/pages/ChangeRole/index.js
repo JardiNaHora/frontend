@@ -6,7 +6,6 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../store/slice";
 import { useNavigate } from "react-router-dom";
-import { validate } from "@material-ui/pickers";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -45,13 +44,13 @@ export const ChangeRole = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .get(BACKEND_URL + `/api/user/${email}`)
+      .get(BACKEND_URL + `/api/check-register/${email}`, { withCredentials: true })
       .then((response) => {
         console.log("email", response);
         if (response.data) {
           setDriver({
-            nomeCompleto: response.data.auth.username,
-            email: response.data.auth.username,
+            nomeCompleto: response.data.username,
+            email: response.data.username,
             // foto: "foto.png",
           });
           setUserFound(true);
@@ -67,6 +66,21 @@ export const ChangeRole = () => {
     // Redireciona o usuário para o endpoint de autenticação do Google no backend
     window.location.href = BACKEND_URL + "/logout";
   };
+
+  const updateUserRole = () => {
+    axios
+      .post(BACKEND_URL + `/user/${email}/${userRole}`, {
+        email: email,
+        role: userRole
+      },
+      {withCredentials: true})
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Não foi possível alterar a função do usuário!", error);
+      });
+  }
 
   return (
     <div>
@@ -122,14 +136,14 @@ export const ChangeRole = () => {
                 <label htmlFor="tipo-usuario">Tipo de Usuário:</label>
                 <select
                   id="tipo-usuario"
-                  onChange={(value) => setUserRole(value)}
+                  onChange={(e) => setUserRole(e.target.value)}
                   required
                 >
                   <option value="USER">Usuário</option>
                   <option value="DRIVER">Motorista</option>
                   <option value="ADMIN">Administrador</option>
                 </select>
-                <input type="submit" value="Salvar" />
+                <input type="submit" value="Salvar" onClick={updateUserRole}/>
               </div>
             ) : (
               <h4>Usuário não encontrado</h4>
