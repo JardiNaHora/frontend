@@ -14,9 +14,11 @@ const Card = ({ dado }) => {
 const CardLista = ({ dados }) => {
   return (
     <div className="viagens">
-      {dados.map((item, index) => (
-        <Card key={index} dado={item} />
-      ))}
+      {dados.length > 0 ? (
+        dados.map((item, index) => <Card key={index} dado={item} />)
+      ) : (
+        <h4>Não há viagens no período selecionado</h4>
+      )}
     </div>
   );
 };

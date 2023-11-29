@@ -67,12 +67,10 @@ export const NewReport = () => {
       },
     ]);
 
-    // if (reports) {
+    // if (reports.lenght < 1) {
     //   document.getElementById("btn-gerar-relatorio").disabled = false;
-    //  isSearched = true;
     // }
     setIsSearched(true);
-    console.log(isSearched);
   };
 
   const handleSubmit = (e) => {
@@ -183,11 +181,7 @@ export const NewReport = () => {
                 </div>
               </form>
             </React.Fragment>
-            {isSearched ? (
-              <CardLista dados={reports} />
-            ) : (
-              <h3>Nenhuma viagem encontrada</h3>
-            )}
+            {isSearched ? <CardLista dados={reports} /> : <div></div>}
           </div>
         </div>
       ) : (

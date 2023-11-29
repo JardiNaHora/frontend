@@ -68,6 +68,9 @@ textarea {
 .viagens {
   width: 100%;
 }
+.viagens h4 {
+  text-align: center;
+}
 
 .viagem hr {
   margin: 15px 0;
