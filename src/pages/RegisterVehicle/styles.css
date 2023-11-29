@@ -1,0 +1,4 @@
+.veiculo {
+  display: flex;
+  flex-direction: column;
+}

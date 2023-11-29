@@ -4,6 +4,7 @@ import { History } from "../pages/History";
 import { Home } from "../pages/Home";
 import { Login } from "../pages/Login";
 import { ChangeRole } from "../pages/ChangeRole";
+import { RegisterVehicle } from "../pages/RegisterVehicle";
 
 export const AppRoutes = () => {
   return (
@@ -15,6 +16,7 @@ export const AppRoutes = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/history" element={<History />} />
           <Route path="/alterar-cadastro" element={<ChangeRole />} />
+          <Route path="/registrar-veiculo" element={<RegisterVehicle />} />
         </Routes>
       </Fragment>
     </BrowserRouter>
