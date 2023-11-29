@@ -4,7 +4,7 @@ import ReactDatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ptBR from "date-fns/locale/pt-BR";
 
-import gerarPDFReports from "./Document";
+import gerarPDFReports from "../PdfMake";
 
 import "./styles.css";
 
@@ -43,6 +43,7 @@ export const NewReport = () => {
   };
 
   const [reports, setReports] = useState(null);
+  const [reportToBeSaved, setReportToBeSaved] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -76,6 +77,8 @@ export const NewReport = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     gerarPDFReports(formulario, reports);
+    setReportToBeSaved({ formulario, reports });
+    console.log(reports, reportToBeSaved);
   };
 
   useEffect(() => {
