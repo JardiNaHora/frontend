@@ -64,3 +64,14 @@ textarea {
   display: flex;
   justify-content: flex-end;
 }
+
+.viagens {
+  width: 100%;
+}
+
+.viagem hr {
+  margin: 15px 0;
+}
+.viagem div {
+  margin: 3px 0;
+}

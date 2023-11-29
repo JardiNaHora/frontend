@@ -4,43 +4,87 @@ import ReactDatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ptBR from "date-fns/locale/pt-BR";
 
+import gerarPDFReports from "./Document";
+
 import "./styles.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../../store/slice";
 import { useNavigate } from "react-router-dom";
+import CardLista from "./Card";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const NewReport = () => {
+  const getDate = (date) => {
+    const data = new Date(date);
+    const dia = String(data.getDate()).padStart(2, "0"); // Garante dois dígitos para o dia
+    const mes = String(data.getMonth() + 1).padStart(2, "0"); // Garante dois dígitos para o mês
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+  };
+
+  const [isSearched, setIsSearched] = useState(false);
   registerLocale("ptBR", ptBR);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [obs, setObs] = useState("");
-  const [autor, setAutor] = useState(null);
+  const [autor, setAutor] = useState({
+    nome: "Leonardo Vasconcelos",
+    email: "leonardovasconcelos73@gmail.com",
+    foto: "foto",
+  });
   const formulario = {
-    dataInicial: startDate,
-    dataFinal: endDate,
+    dataCriacao: getDate(new Date()),
+    dataInicial: getDate(startDate),
+    dataFinal: getDate(endDate),
     obs: obs,
     autor: autor,
   };
+
+  const [reports, setReports] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
+  const buscar = (e) => {
+    e.preventDefault();
+    setReports([
+      {
+        motorista: "Toretto",
+        veiculo: "Ônibus",
+        data: "22/11/2023",
+        distanciaPercorrida: 55,
+        numeroDeViagens: 20,
+      },
+      {
+        motorista: "Toretto",
+        veiculo: "Micro-Ônibus",
+        data: "23/11/2023",
+        distanciaPercorrida: 40,
+        numeroDeViagens: 18,
+      },
+    ]);
+
+    // if (reports) {
+    //   document.getElementById("btn-gerar-relatorio").disabled = false;
+    //  isSearched = true;
+    // }
+    setIsSearched(true);
+    console.log(isSearched);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Faça o que você quiser com o objeto JSON, por exemplo, enviar para um servidor
-    console.log(formulario);
+    gerarPDFReports(formulario, reports);
   };
 
   useEffect(() => {
     axios
       .get(BACKEND_URL + "/home/auth", { withCredentials: true })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (
           response.data.auth.details.sessionId &&
           response.data.auth.authorities[0].authority === "USER"
@@ -79,7 +123,7 @@ export const NewReport = () => {
           </div>
           <div className="body">
             <React.Fragment>
-              <h1>Gerar Relatorio</h1>
+              <h1>Relatório</h1>
               <div className="datas">
                 <div className="data data-inicio">
                   <label htmlFor="start">Data de inicio: </label>
@@ -117,7 +161,7 @@ export const NewReport = () => {
                   />
                 </div>
               </div>
-              <form onSubmit={handleSubmit} id="relatorio">
+              <form onSubmit={buscar} id="relatorio">
                 <label htmlFor="obs">Observação:</label>
                 <textarea
                   id="obs"
@@ -128,10 +172,22 @@ export const NewReport = () => {
                 ></textarea>
                 <div className="botoes">
                   <input type="reset" />
-                  <input type="submit" />
+                  <input type="submit" value={"Buscar"} />
+                  <input
+                    type="button"
+                    id="btn-gerar-relatorio"
+                    value={"Gerar Relatório"}
+                    onClick={handleSubmit}
+                    // disabled
+                  />
                 </div>
               </form>
             </React.Fragment>
+            {isSearched ? (
+              <CardLista dados={reports} />
+            ) : (
+              <h3>Nenhuma viagem encontrada</h3>
+            )}
           </div>
         </div>
       ) : (
