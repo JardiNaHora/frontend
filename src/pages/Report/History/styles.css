@@ -1,0 +1,87 @@
+.container {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 4rem;
+}
+
+h1 {
+  text-align: center;
+  padding-bottom: 2rem;
+  margin: 2rem;
+}
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  min-width: 150px;
+}
+
+.botoes {
+  display: flex;
+  margin-left: auto;
+}
+
+#buscar {
+  flex-grow: 1; /* Isso faz com que o campo de busca ocupe todo o espaço disponível */
+  max-width: 100%;
+  margin-bottom: 0;
+  height: 36px;
+}
+
+.relatorios {
+  width: 100%;
+}
+
+.relatorios h4 {
+  text-align: center;
+}
+
+.relatorio * {
+  font-weight: normal;
+}
+
+.relatorio hr {
+  margin: 15px 0;
+}
+
+.relatorio-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.relatorio-config {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-visualizar {
+  display: flex;
+  align-items: flex-start;
+}
+
+.btn-visualizar input {
+  margin-bottom: 0;
+}
+
+/* Adicionando regras para tornar o layout responsivo */
+@media (min-width: 600px) {
+  .relatorio-config {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .btn-visualizar {
+    margin-top: 0;
+  }
+}
