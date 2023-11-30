@@ -1,0 +1,116 @@
+.container {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 2rem; /* Reduzi a margem para melhor responsividade */
+}
+
+h1 {
+  text-align: center;
+  margin: 1rem 0; /* Reduzi a margem superior para melhor responsividade */
+}
+
+form {
+  width: 100%; /* Ocupa a largura máxima do container pai */
+  max-width: 400px; /* Define uma largura máxima para evitar que o formulário fique muito largo */
+  margin: 0;
+}
+
+#email {
+  width: 100%; /* Ocupa a largura máxima do formulário */
+  box-sizing: border-box;
+  padding: 0.5rem; /* Adicionei um preenchimento para melhor aparência */
+}
+
+.botoes {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.3rem; /* Adicionei uma margem superior para melhor espaçamento */
+}
+
+.botoes input {
+  margin-left: 0.4rem;
+}
+
+/* Adicione uma regra de estilo de mídia para telas menores */
+@media (max-width: 600px) {
+  .body {
+    margin: 0 1rem; /* Ajusta a margem para telas menores */
+  }
+
+  #email {
+    width: 100%; /* Ocupa a largura total em telas menores */
+  }
+}
+
+.linha-horizontal {
+  width: 100%; /* Faz a linha ocupar a largura total do container pai */
+  height: 2px; /* Define a espessura da linha */
+  background-color: #ccc; /* Cor da linha */
+  margin-top: 1rem; /* Adicione uma margem superior para espaçamento */
+  margin-bottom: 1rem; /* Adicione uma margem inferior para espaçamento */
+  border: none; /* Remove a borda padrão */
+}
+
+/* .dados-adicionais {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.dados-adicionais label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.dados-adicionais input,
+.dados-adicionais select {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+.dados-adicionais img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+} */
+
+/* Adicione essas regras ao seu CSS existente */
+
+.dados-adicionais {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.dados-adicionais label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.dados-adicionais input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.dados-adicionais img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+#tipo-usuario {
+  width: 50%;
+  margin: 0 auto;
+  padding: 0.5rem;
+}

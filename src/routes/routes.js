@@ -6,6 +6,8 @@ import { Login } from "../pages/Login";
 import { Adm } from "../pages/Adm";
 import { NewReport } from "../pages/Report/New";
 import { ReportHistory } from "../pages/Report/History";
+import { ChangeRole } from "../pages/ChangeRole";
+
 
 export const AppRoutes = () => {
   return (
@@ -19,6 +21,8 @@ export const AppRoutes = () => {
           <Route path="/adm" element={<Adm />} />
           <Route path="/relatorio/novo" element={<NewReport />} />
           <Route path="/relatorio/historico" element={<ReportHistory />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/alterar-cadastro" element={<ChangeRole />} />
         </Routes>
       </Fragment>
     </BrowserRouter>
