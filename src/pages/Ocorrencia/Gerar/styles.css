@@ -1,0 +1,16 @@
+input {
+  margin: 0 0 0 0;
+}
+
+label {
+  margin-top: 12px;
+  margin-bottom: 7px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.select {
+  font-size: 16px;
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import CardLista from "../../../components/Card";
+import CardLista from "../../components/Card";
 import "./styles.css";
 
 import { useDispatch, useSelector } from "react-redux";

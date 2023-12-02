@@ -8,7 +8,7 @@ import { NewReport } from "../pages/Report/New";
 import { ReportHistory } from "../pages/Report/History";
 import { ChangeRole } from "../pages/ChangeRole";
 import { RegisterVehicle } from "../pages/RegisterVehicle";
-
+import { GenerateOccurrence } from "../pages/Ocorrencia/Gerar";
 
 export const AppRoutes = () => {
   return (
@@ -25,6 +25,7 @@ export const AppRoutes = () => {
           <Route path="/history" element={<History />} />
           <Route path="/alterar-cadastro" element={<ChangeRole />} />
           <Route path="/registrar-veiculo" element={<RegisterVehicle />} />
+          <Route path="/ocorrencia/novo" element={<GenerateOccurrence />} />
         </Routes>
       </Fragment>
     </BrowserRouter>
