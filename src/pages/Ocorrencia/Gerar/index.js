@@ -38,12 +38,13 @@ export const GenerateOccurrence = () => {
   const [travels, setTravels] = useState("");
   const [direction, setDirection] = useState("campusParaMetro");
   const [motivation, setMotivation] = useState("");
-  const [ocorrencia, setOcorrencia] = useState(null);
+  const [occurrenceType, setOccurrenceType] = useState("Add Travels");
   //TODO: mudar para pegar no sistema:
   const autor = {
     nome: "Leonardo Vasconcelos",
     email: "leonardovasconcelos73@gmail.com",
   };
+  const [ocorrencia, setOcorrencia] = useState(null);
 
   useEffect(() => {
     axios
@@ -76,18 +77,35 @@ export const GenerateOccurrence = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setOcorrencia({
-      autor: autor,
-      ocorrencia: {
-        dataInicial: getDate(startDate),
-        dataFinal: getDate(endDate),
-        horarioInicial: startTime,
-        horarioFinal: endTime,
-        viagens: travels,
-        direcao: direction,
-        motivacao: motivation,
-      },
-    });
+    occurrenceType === "Add Travels"
+      ? setOcorrencia({
+          autor: autor,
+          ocorrencia: {
+            dataCriacao: getDate(new Date()),
+            tipoOcorrencia: occurrenceType,
+            dataInicial: getDate(startDate),
+            dataFinal: getDate(endDate),
+            horarioInicial: startTime,
+            horarioFinal: endTime,
+            viagens: travels,
+            direcao: direction,
+            motivacao: motivation,
+          },
+        })
+      : setOcorrencia({
+          autor: autor,
+          ocorrencia: {
+            dataCriacao: getDate(new Date()),
+            tipoOcorrencia: occurrenceType,
+            dataInicial: getDate(startDate),
+            dataFinal: getDate(endDate),
+            horarioInicial: startTime,
+            horarioFinal: endTime,
+            motivacao: motivation,
+          },
+        });
+
+    console.log(ocorrencia);
 
     // Limpar os campos após o envio do formulário
     setStartDate("");
@@ -115,6 +133,11 @@ export const GenerateOccurrence = () => {
           </div>
           <div className="body">
             <h1>Registrar Ocorrência</h1>
+            <label>Tipo de ocorrência</label>
+            <select onChange={(e) => setOccurrenceType(e.target.value)}>
+              <option value={"Add Travels"}>Adicionar viagens</option>
+              <option value={"Remove Travels"}>Remover viagens</option>
+            </select>
             <label htmlFor="intervalo-dias">
               Data de começo e de fim da ocorrência
             </label>
@@ -130,7 +153,7 @@ export const GenerateOccurrence = () => {
               required
               form="ocorrencia"
             />
-            <form onSubmit={handleSubmit} className="ocorrencia">
+            <form onSubmit={handleSubmit} id="ocorrencia">
               <div>
                 <label htmlFor="intervalo-horario">
                   Horário de inicio e fim:
@@ -148,28 +171,35 @@ export const GenerateOccurrence = () => {
                   onChange={(e) => setEndTime(e.target.value)}
                 />
               </div>
-              <label htmlFor="sentido">Selecione o sentido: </label>
-              <select
-                className="select"
-                required
-                onChange={(e) => setDirection(e.target.value)}
-              >
-                <option className="select" value={"campusParaMetro"}>
-                  Campus → Metrô
-                </option>
-                <option className="select" value={"metroParaCampus"}>
-                  Metrô → Campus
-                </option>
-              </select>
-              <label htmlFor="viagens">Número de viagens:</label>
-              <input
-                type="number"
-                min="1"
-                max="99"
-                value={travels}
-                required
-                onChange={(e) => setTravels(e.target.value)}
-              />
+
+              {occurrenceType === "Remove Travels" ? (
+                <div></div>
+              ) : (
+                <div className="ocorrenciaAdd">
+                  <label htmlFor="sentido">Selecione o sentido: </label>
+                  <select
+                    required
+                    onChange={(e) => setDirection(e.target.value)}
+                  >
+                    <option className="select" value={"campusParaMetro"}>
+                      Campus → Metrô
+                    </option>
+                    <option className="select" value={"metroParaCampus"}>
+                      Metrô → Campus
+                    </option>
+                  </select>
+                  <label htmlFor="viagens">Número de viagens:</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="99"
+                    value={travels}
+                    required
+                    onChange={(e) => setTravels(e.target.value)}
+                  />
+                </div>
+              )}
+
               <label htmlFor="motivacao">Motivo da ocorrência:</label>
               <textarea
                 id="motivacao"
