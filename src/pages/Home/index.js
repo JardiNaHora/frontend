@@ -69,7 +69,7 @@ export const Home = () => {
   };
 
   return (
-    <div className={"root"}>
+    <div className="content">
       {isAuthenticated ? (
         <div className="container">
           <AppBar position="static">
@@ -77,14 +77,6 @@ export const Home = () => {
               <Typography variant="h6" className={"title"}>
                 Olá, {user}!
               </Typography>
-              <Button
-                color="inherit"
-                onClick={() => {
-                  window.location.href = BACKEND_URL + "/logout";
-                }}
-              >
-                sair
-              </Button>
             </Toolbar>
           </AppBar>
           <Grid container spacing={3}>

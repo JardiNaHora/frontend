@@ -1,22 +1,22 @@
-import React from 'react';
-import {BsFillBellFill, BsPersonCircle, BsSearch, BsJustify, BsFillEnvelopeFill} from "react-icons/bs";
+import React from "react";
+
+import { Menu } from "@mui/icons-material";
+import { Avatar } from "@mui/material";
 
 import "./styles.css";
 
-export const Header = ({OpenDrawer}) => {
+export const Header = ({ OpenSidebar }) => {
   return (
-    <header className='header'>
-        <div className='menu-icon'>
-            <BsJustify className='icon' onClick={OpenDrawer}/>
-        </div>
-        <div className='header-left'>
-            <BsSearch className='icon'/>
-        </div>
-        <div className='header-right'>
-            <BsFillBellFill className='icon'/>
-            <BsFillEnvelopeFill className='icon'/>
-            <BsPersonCircle className='icon'/>
-        </div>
+    <header className="header">
+      <div className="menu-icon">
+        <Menu className="icon" onClick={OpenSidebar} />
+      </div>
+      <div className="header-left">
+        {/* <BsSearch className="icon" /> */}
+      </div>
+      <div className="header-right">
+        <Avatar alt="user-name" src="" />
+      </div>
     </header>
-  )
+  );
 };
