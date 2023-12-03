@@ -6,7 +6,7 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../store/slice";
 import { useNavigate } from "react-router-dom";
-import { startOfWeek, addDays, format } from "date-fns";
+import { startOfWeek, addDays, subDays, format } from "date-fns";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -238,11 +238,8 @@ export const Travels = () => {
     return `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
   };
 
-  const dataAtual = new Date();
-  const diasDaSemana = getWeekDays(dataAtual);
-
   const applyOccurrencesToWeekDays = () => {
-    const updatedWeekDays = diasDaSemana.map((dia) => {
+    const updatedWeekDays = getWeekDays(currentDate).map((dia) => {
       const horarios =
         dia.dayOfWeek === 0 || dia.dayOfWeek === 6 ? [] : [...defaultData];
 
@@ -255,9 +252,27 @@ export const Travels = () => {
     setWeekDaysWithHorarios(updatedWeekDays);
   };
 
+  // useEffect(() => {
+  //   applyOccurrencesToWeekDays();
+  // }, []); // Certifique-se de ajustar as dependências conforme necessário
+
+  const handlePrevWeek = () => {
+    setCurrentDate(subDays(currentDate, 7));
+  };
+
+  const handleToday = () => {
+    setCurrentDate(new Date());
+  };
+
+  const handleNextWeek = () => {
+    setCurrentDate(addDays(currentDate, 7));
+  };
+
   useEffect(() => {
+    // Esta função será executada sempre que a data atual for alterada
     applyOccurrencesToWeekDays();
-  }, []); // Certifique-se de ajustar as dependências conforme necessário
+    // Dependência: currentDate - Esta função será executada sempre que a data atual for alterada
+  }, [currentDate]);
 
   const renderTable = () => {
     // Obter todos os horários únicos presentes em weekDaysWithHorarios
@@ -336,7 +351,14 @@ export const Travels = () => {
               sair
             </button>
           </div>
-          <div className="body">{renderTable()}</div>
+          <div className="body">
+            <div className="navigation-buttons">
+              <button onClick={handlePrevWeek}>Semana Anterior</button>
+              <button onClick={handleToday}>Semana Atual</button>
+              <button onClick={handleNextWeek}>Próxima Semana</button>
+            </div>
+            {renderTable()}
+          </div>
         </div>
       ) : (
         <button
