@@ -1,0 +1,39 @@
+/* Adicione essas regras ao seu arquivo CSS */
+
+.body {
+  max-width: 1200px;
+  margin: 0 auto;
+  /* padding: 20px; */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+  width: 100px;
+}
+
+thead {
+  background-color: #2ecc71; /* Verde */
+  color: white;
+}
+
+th div {
+  font-size: 12px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2; /* Cor de fundo alternada para linhas */
+}
+
+td div {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
