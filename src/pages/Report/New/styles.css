@@ -1,0 +1,80 @@
+.container {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.body {
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+  margin: 0 4rem;
+}
+
+h1 {
+  padding-bottom: 2rem;
+  margin: 2rem;
+}
+
+.datas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.6rem;
+}
+
+.data {
+  display: grid;
+  /* justify-items: center; */
+}
+.date-picker {
+  width: 10rem;
+}
+/* .date-picker::placeholder {
+  text-align: center;
+} */
+
+#relatorio {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+form {
+  max-width: 90%;
+  min-width: 300px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+textarea {
+  width: 100%;
+  padding: 8px;
+  resize: vertical; /* Isso permite a redimensionamento apenas na direção vertical */
+  font-size: 14px;
+}
+.botoes {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.viagens {
+  width: 100%;
+}
+.viagens h4 {
+  text-align: center;
+}
+
+.viagem hr {
+  margin: 15px 0;
+}
+.viagem div {
+  margin: 3px 0;
+}

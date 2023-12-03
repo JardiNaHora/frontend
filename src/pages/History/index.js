@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import Viagens from "./Viagens/index.js";
+import CardLista from "../../components/Card";
 import "./styles.css";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -12,11 +12,20 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const History = () => {
   const viagens = [
-    { id: 1, data: "01/01/2023" },
-    { id: 1, data: "01/01/2023" },
-    { id: 1, data: "01/01/2023" },
-    { id: 2, data: "01/03/2021" },
-    { id: 3, data: "06/10/2022" },
+    {
+      motorista: "Toretto",
+      veiculo: "Ônibus",
+      data: "22/11/2023",
+      distanciaPercorrida: 55,
+      numeroDeViagens: 20,
+    },
+    {
+      motorista: "Toretto",
+      veiculo: "Micro-Ônibus",
+      data: "23/11/2023",
+      distanciaPercorrida: 40,
+      numeroDeViagens: 18,
+    },
   ];
   const [anoSelecionado, setAnoSelecionado] = useState("");
   const [mesSelecionado, setMesSelecionado] = useState("");
@@ -115,11 +124,7 @@ export const History = () => {
             </select>
 
             <div className="historicoContainer">
-              <Viagens
-                viagens={viagens}
-                mes={mesSelecionado}
-                ano={anoSelecionado}
-              />
+              <CardLista dados={viagens} />
             </div>
           </div>
         </div>

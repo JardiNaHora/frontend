@@ -45,7 +45,7 @@ export const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/home/auth", { withCredentials: true })
+      .get(BACKEND_URL + "/home/auth", { withCredentials: true })
       .then((response) => {
         console.log(response);
         if (response.data.auth.details.sessionId) {
