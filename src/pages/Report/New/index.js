@@ -15,7 +15,7 @@ import CardLista from "../../../components/Card";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-export const NewReport = () => {
+export const  NewReport = () => {
   const getDate = (date) => {
     const data = new Date(date);
     const dia = String(data.getDate()).padStart(2, "0"); // Garante dois dígitos para o dia
@@ -80,29 +80,6 @@ export const NewReport = () => {
     setReportToBeSaved({ formulario, reports });
     console.log(reports, reportToBeSaved);
   };
-
-  useEffect(() => {
-    axios
-      .get(BACKEND_URL + "/home/auth", { withCredentials: true })
-      .then((response) => {
-        // console.log(response);
-        if (
-          response.data.auth.details.sessionId &&
-          response.data.auth.authorities[0].authority === "USER"
-        ) {
-          dispatch(setAuthenticated(true));
-        } else {
-          dispatch(setAuthenticated(false));
-          navigate("/login");
-        }
-      })
-      .catch((error) => {
-        console.error(
-          "Erro ao obter informações de autenticação do usuário",
-          error
-        );
-      });
-  }, [dispatch, navigate]);
 
   const logout = async () => {
     // Redireciona o usuário para o endpoint de autenticação do Google no backend

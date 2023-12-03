@@ -12,7 +12,6 @@ import { ReportHistory } from "../pages/Report/History";
 import { ChangeRole } from "../pages/ChangeRole";
 import { RegisterVehicle } from "../pages/RegisterVehicle";
 
-
 export const AppRoutes = () => {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
 
@@ -23,27 +22,28 @@ export const AppRoutes = () => {
   return (
     <Fragment>
       {/* Exclude Header and Sidebar for Login route */}
-      {window.location.pathname !== "/login" && window.location.pathname !== "/" && (
-        <>
-          <Header OpenSidebar={OpenSidebar} />
-          <Sidebar
-            openSidebarToggle={openSidebarToggle}
-            OpenSidebar={OpenSidebar}
-          />
-        </>
-      )}
+      {window.location.pathname !== "/login" &&
+        window.location.pathname !== "/" && (
+          <>
+            <Header OpenSidebar={OpenSidebar} />
+            <Sidebar
+              openSidebarToggle={openSidebarToggle}
+              OpenSidebar={OpenSidebar}
+            />
+          </>
+        )}
 
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
-          <Route path="/histoico-viagens" element={<History />} />
-          <Route path="/adm" element={<Adm />} />
-          <Route path="/relatorio/novo" element={<NewReport />} />
-          <Route path="/relatorio/historico" element={<ReportHistory />} />
+        <Route path="/histoico-viagens" element={<History />} />
+        <Route path="/adm" element={<Adm />} />
+        <Route path="/relatorio/novo" element={<NewReport />} />
+        <Route path="/relatorio/historico" element={<ReportHistory />} />
         <Route path="/history" element={<History />} />
-          <Route path="/alterar-cadastro" element={<ChangeRole />} />
-          <Route path="/registrar-veiculo" element={<RegisterVehicle />} />
+        <Route path="/alterar-cadastro" element={<ChangeRole />} />
+        <Route path="/registrar-veiculo" element={<RegisterVehicle />} />
       </Routes>
     </Fragment>
   );
