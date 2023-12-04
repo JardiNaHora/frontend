@@ -117,6 +117,7 @@ export const Map = () => {
           streetViewControl: false,
           rotateControl: false,
           fullscreenControl: false,
+          zoomControl: false
         }}
         clickableIcons={false}
       >

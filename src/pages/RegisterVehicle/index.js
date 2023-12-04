@@ -42,11 +42,6 @@ export const RegisterVehicle = () => {
       });
   }, [dispatch, navigate]);
 
-  const logout = async () => {
-    // Redireciona o usuário para o endpoint de autenticação do Google no backend
-    window.location.href = BACKEND_URL + "/logout";
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -66,18 +61,9 @@ export const RegisterVehicle = () => {
   };
 
   return (
-    <div>
+    <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="header">
-            <button
-              onClick={() => {
-                window.location.href = BACKEND_URL + "/logout";
-              }}
-            >
-              sair
-            </button>
-          </div>
           <div className="body">
             <h1>Registrar Veículo</h1>
             <form onSubmit={handleSubmit} className="veiculo">
@@ -109,7 +95,7 @@ export const RegisterVehicle = () => {
               />
               <div>
                 <input type="reset" />
-                <input type="submit" value="Cadastrar Veículo" />
+                <input type="submit" value="Registrar Veículo" />
               </div>
             </form>
           </div>

@@ -118,18 +118,9 @@ export const ReportHistory = () => {
   };
 
   return (
-    <div>
+    <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="header">
-            <button
-              onClick={() => {
-                window.location.href = BACKEND_URL + "/logout";
-              }}
-            >
-              sair
-            </button>
-          </div>
           <div className="body">
             <h1>Histórico de Relatórios</h1>
             <form onSubmit={handleSubmit}>
