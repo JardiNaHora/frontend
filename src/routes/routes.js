@@ -43,8 +43,8 @@ export const AppRoutes = () => {
         <Route path="/relatorio-historico" element={<ReportHistory />} />
         <Route path="/alterar-cadastro" element={<ChangeRole />} />
         <Route path="/registrar-veiculo" element={<RegisterVehicle />} />
-          <Route path="/ocorrencia/novo" element={<GenerateOccurrence />} />
-          <Route path="/viagens" element={<Travels />} />
+        <Route path="/ocorrencia" element={<GenerateOccurrence />} />
+        <Route path="/viagens" element={<Travels />} />
       </Routes>
     </Fragment>
   );

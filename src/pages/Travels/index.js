@@ -257,7 +257,7 @@ export const Travels = () => {
   // }, []); // Certifique-se de ajustar as dependências conforme necessário
 
   const handlePrevWeek = () => {
-    setCurrentDate(subDays(currentDate, 7));
+    setCurrentDate(subDays(new Date(), 7));
   };
 
   const handleToday = () => {
@@ -265,7 +265,7 @@ export const Travels = () => {
   };
 
   const handleNextWeek = () => {
-    setCurrentDate(addDays(currentDate, 7));
+    setCurrentDate(addDays(new Date(), 7));
   };
 
   useEffect(() => {
@@ -295,8 +295,8 @@ export const Travels = () => {
             {weekDaysWithHorarios.map((dia) => (
               <th key={dia.date}>
                 <div>
-                  <div>{dia.date}</div>
-                  <div>{dia.dayName}</div>
+                  <p>{dia.date}</p>
+                  <p>{dia.dayName}</p>
                 </div>
               </th>
             ))}
@@ -313,19 +313,19 @@ export const Travels = () => {
                   <td key={dia.date}>
                     {horarioData ? (
                       <div>
-                        <div>
+                        <p>
                           {horarioData.horarioInicio} -{" "}
                           {horarioData.horarioFinal}
-                        </div>
-                        <div>Viagens: {horarioData.viagens}</div>
-                        <div>
+                        </p>
+                        <p>Viagens: {horarioData.viagens}</p>
+                        <p>
                           {horarioData.sentido === "metroParaCampus"
                             ? "Metrô → Campus"
                             : "Campus → Metrô"}
-                        </div>
+                        </p>
                       </div>
                     ) : (
-                      <div>---</div>
+                      <p>---</p>
                     )}
                   </td>
                 );
@@ -339,18 +339,9 @@ export const Travels = () => {
 
   ////////////////////////////////////////
   return (
-    <div>
+    <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="header">
-            <button
-              onClick={() => {
-                window.location.href = BACKEND_URL + "/logout";
-              }}
-            >
-              sair
-            </button>
-          </div>
           <div className="body">
             <div className="navigation-buttons">
               <button onClick={handlePrevWeek}>Semana Anterior</button>

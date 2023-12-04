@@ -34,6 +34,7 @@ export const Map = () => {
   const [origin, setOrigin] = useState(jardineira);
   const [destination, setDestination] = useState(metro);
   const [response, setResponse] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
@@ -44,7 +45,24 @@ export const Map = () => {
   const THINGSPEAK_CHANNEL_ID = process.env.REACT_APP_THINGSPEAK_CHANNEL_ID;
   const THINGSPEAK_API_KEY = process.env.REACT_APP_THINGSPEAK_API_KEY;
 
-  //teste do chatgpt
+  // pega as coordenadas do usuário
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      // setJardineira({
+      //   lat: parseFloat(position.coords.latitude),
+      //   lng: parseFloat(position.coords.longitude),
+      // });
+      // setOrigin({
+      //   lat: parseFloat(position.coords.latitude),
+      //   lng: parseFloat(position.coords.longitude),
+      // });
+      setUserLocation({
+        lat: parseFloat(position.coords.latitude),
+        lng: parseFloat(position.coords.longitude),
+      });
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,7 +70,7 @@ export const Map = () => {
         const response = await axios.get(
           `https://api.thingspeak.com/channels/${THINGSPEAK_CHANNEL_ID}/feeds.json?api_key=${THINGSPEAK_API_KEY}&results=1`
         );
-        // O resto do código permanece igual
+
         setJardineira({
           lat: parseFloat(response.data.feeds[0].field1),
           lng: parseFloat(response.data.feeds[0].field2),
@@ -67,10 +85,11 @@ export const Map = () => {
     };
 
     // Chama a função fetchData imediatamente
-    fetchData();
-
+    // fetchData();
+    getLocation();
     // Configura o intervalo para chamar a função fetchData a cada 10 segundos
-    const intervalId = setInterval(fetchData, 10000);
+    // const intervalId = setInterval(fetchData, 10000);
+    const intervalId = setInterval(getLocation, 10000); // pega a posição do usuário
 
     // Limpa o intervalo quando o componente for desmontado
     return () => clearInterval(intervalId);
@@ -117,7 +136,7 @@ export const Map = () => {
           streetViewControl: false,
           rotateControl: false,
           fullscreenControl: false,
-          zoomControl: false
+          zoomControl: false,
         }}
         clickableIcons={false}
       >
@@ -127,7 +146,6 @@ export const Map = () => {
             callback={directionsCallback}
           />
         )}
-
         {response && directionsRendererOptions && true && (
           <DirectionsRenderer options={directionsRendererOptions} />
         )}
@@ -136,6 +154,12 @@ export const Map = () => {
           icon={"https://img.icons8.com/?size=36&id=79416&format=png"}
           options={{ label: { text: "IFCE", className: "marker" } }}
         />
+        <Marker
+          position={userLocation}
+          icon={"https://img.icons8.com/?size=24&id=37170&format=png"}
+          options={{ label: { text: "Paulin", className: "marker" } }}
+        />
+        https://img.icons8.com/?size=50&id=37170&format=png
         <Marker
           position={jardineira}
           icon={"https://img.icons8.com/?size=36&id=37860&format=png"}

@@ -119,18 +119,9 @@ export const GenerateOccurrence = () => {
   };
 
   return (
-    <div>
+    <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="header">
-            <button
-              onClick={() => {
-                window.location.href = BACKEND_URL + "/logout";
-              }}
-            >
-              sair
-            </button>
-          </div>
           <div className="body">
             <h1>Registrar Ocorrência</h1>
             <label>Tipo de ocorrência</label>
