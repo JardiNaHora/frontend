@@ -11,6 +11,7 @@ import { ReportHistory } from "../pages/Report/History";
 import { ChangeRole } from "../pages/ChangeRole";
 import { RegisterVehicle } from "../pages/RegisterVehicle";
 import { GenerateOccurrence } from "../pages/Ocorrencia/Gerar";
+import { Travels } from "../pages/Travels";
 
 export const AppRoutes = () => {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -43,6 +44,7 @@ export const AppRoutes = () => {
         <Route path="/alterar-cadastro" element={<ChangeRole />} />
         <Route path="/registrar-veiculo" element={<RegisterVehicle />} />
           <Route path="/ocorrencia/novo" element={<GenerateOccurrence />} />
+          <Route path="/viagens" element={<Travels />} />
       </Routes>
     </Fragment>
   );
