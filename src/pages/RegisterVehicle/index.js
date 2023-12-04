@@ -109,7 +109,7 @@ export const RegisterVehicle = () => {
               />
               <div>
                 <input type="reset" />
-                <input type="submit" value="Cadastrar Veículo" />
+                <input type="submit" value="Registrar Veículo" />
               </div>
             </form>
           </div>

@@ -27,12 +27,17 @@ export const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
     },
     {
       icon: <ContentPasteGoIcon className="icon" />,
-      text: "Relatório",
-      href: "/relatorio/novo",
+      text: "Criar Relatório",
+      href: "/relatorio-novo",
+    },
+    {
+      icon: <ContentPasteSearchIcon className="icon" />,
+      text: "Histórico Relatórios",
+      href: "/relatorio-historico",
     },
     {
       icon: <ManageAccountsIcon className="icon" />,
-      text: "Gerenciar",
+      text: "Gerenciar Cadastro",
       href: "/alterar-cadastro",
     },
     {
@@ -43,12 +48,12 @@ export const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
     {
       icon: <AirportShuttleIcon className="icon" />,
       text: "Veículo",
-      href: "/cadastrar-veiculo",
+      href: "/registrar-veiculo",
     },
     {
       icon: <DepartureBoardIcon className="icon" />,
-      text: "Viagens",
-      href: "/historico",
+      text: "Histórico Viagens",
+      href: "/historico-viagens",
     },
     {
       icon: <InfoIcon className="icon" />,

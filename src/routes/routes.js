@@ -6,7 +6,6 @@ import { Home } from "../pages/Home";
 import { History } from "../pages/History";
 import { Sidebar } from "../components/Sidebar";
 import { Header } from "../components/Header";
-import { Adm } from "../pages/Adm";
 import { NewReport } from "../pages/Report/New";
 import { ReportHistory } from "../pages/Report/History";
 import { ChangeRole } from "../pages/ChangeRole";
@@ -37,11 +36,9 @@ export const AppRoutes = () => {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/histoico-viagens" element={<History />} />
-        <Route path="/adm" element={<Adm />} />
-        <Route path="/relatorio/novo" element={<NewReport />} />
-        <Route path="/relatorio/historico" element={<ReportHistory />} />
-        <Route path="/history" element={<History />} />
+        <Route path="/historico-viagens" element={<History />} />
+        <Route path="/relatorio-novo" element={<NewReport />} />
+        <Route path="/relatorio-historico" element={<ReportHistory />} />
         <Route path="/alterar-cadastro" element={<ChangeRole />} />
         <Route path="/registrar-veiculo" element={<RegisterVehicle />} />
       </Routes>
