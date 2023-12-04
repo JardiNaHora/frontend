@@ -18,6 +18,7 @@ export const RegisterVehicle = () => {
   const [tipoVeiculo, setTipoVeiculo] = useState("");
   const [placaVeiculo, setPlacaVeiculo] = useState("");
   const [maxPassageiros, setMaxPassageiros] = useState("");
+  const [veiculo, setVeiculo] = useState(null);
 
   useEffect(() => {
     axios
@@ -51,18 +52,25 @@ export const RegisterVehicle = () => {
     e.preventDefault();
 
     // Aqui você pode realizar as ações necessárias com os dados do formulário
-    console.log("Dados do Veículo:", {
-      nomeVeiculo,
-      tipoVeiculo,
-      placaVeiculo,
-      maxPassageiros,
-    });
+    // console.log("Dados do Veículo:", {
+    //   nomeVeiculo,
+    //   tipoVeiculo,
+    //   placaVeiculo,
+    //   maxPassageiros,
+    // });
 
+    setVeiculo({
+      nomeVeiculo: nomeVeiculo,
+      tipoVeiculo: tipoVeiculo,
+      placaVeiculo: placaVeiculo,
+      maxPassageiros: maxPassageiros,
+    });
     // Limpar os campos após o envio do formulário
     setNomeVeiculo("");
     setTipoVeiculo("");
     setPlacaVeiculo("");
     setMaxPassageiros("");
+    setVeiculo(null);
   };
 
   return (
@@ -86,18 +94,21 @@ export const RegisterVehicle = () => {
                 type="text"
                 value={nomeVeiculo}
                 onChange={(e) => setNomeVeiculo(e.target.value)}
+                required
               />
               <label htmlFor="tipo-veiculo">Tipo de veículo: </label>
               <input
                 type="text"
                 value={tipoVeiculo}
                 onChange={(e) => setTipoVeiculo(e.target.value)}
+                required
               />
               <label htmlFor="placa">Número da placa: </label>
               <input
                 type="text"
                 value={placaVeiculo}
                 onChange={(e) => setPlacaVeiculo(e.target.value)}
+                required
               />
               <label htmlFor="passageiros">
                 Número máximo de passageiros:{" "}
@@ -106,6 +117,7 @@ export const RegisterVehicle = () => {
                 type="number"
                 value={maxPassageiros}
                 onChange={(e) => setPlacaVeiculo(e.target.value)}
+                required
               />
               <div>
                 <input type="reset" />

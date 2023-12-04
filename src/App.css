@@ -3,7 +3,7 @@ body {
   padding: 0;
   background-color: #1d2634;
   color: #9e9ea4;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .icon {
@@ -33,34 +33,33 @@ body {
   grid-template-columns: 260px 1fr 1fr 1fr;
   grid-template-rows: 0.2fr 3fr;
   grid-template-areas:
-      'sidebar header header header'
-      'sidebar main main main'
-      'login login login login';
+    "sidebar header header header"
+    "sidebar main main main"
+    "login login login login";
   height: 100vh;
 }
-
 
 /* Medium <= 992px */
 
 @media screen and (max-width: 992px) {
   .grid-container {
-      grid-template-columns: 1fr;
-      grid-template-rows: 0.2fr 3fr;
-      grid-template-areas:
-          'header'
-          'main';
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 3fr;
+    grid-template-areas:
+      "header"
+      "main";
   }
 
   #sidebar {
-      display: none;
+    display: none;
   }
 
   .menu-icon {
-      display: inline;
+    display: inline;
   }
 
-  .sidebar-title>span {
-      display: inline;
+  .sidebar-title > span {
+    display: inline;
   }
 }
 
@@ -68,14 +67,14 @@ body {
 
 @media screen and (max-width: 768px) {
   .main-cards {
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-bottom: 0;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 0;
   }
 
   .charts {
-      grid-template-columns: 1fr;
-      margin-top: 30px;
+    grid-template-columns: 1fr;
+    margin-top: 30px;
   }
 }
 
@@ -83,6 +82,6 @@ body {
 
 @media screen and (max-width: 576px) {
   .header-left {
-      display: none;
+    display: none;
   }
 }

@@ -18,7 +18,7 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 1em;
-  background-image: url('../../assets/images.jfif');
+  background-image: url("../../assets/images.jfif");
   background-size: cover;
 }
 
@@ -37,12 +37,12 @@ h2 {
 
 input {
   margin-bottom: 1em;
-  padding: .5em;
+  padding: 0.5em;
   font-size: 1em;
 }
 
 button {
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   font-size: 1em;
   color: white;
   background-color: #228b22;
@@ -78,10 +78,10 @@ button:hover {
 input,
 button {
   /* Adicione algum preenchimento */
-  padding: .5em;
+  padding: 0.5em;
 
   /* Adicione algum arredondamento nas bordas */
-  border-radius: .5em;
+  border-radius: 0.5em;
 
   /* Adicione uma borda */
   border: 1px solid #ccc;
@@ -93,7 +93,7 @@ button {
   color: white;
 
   /* Adicione algum espaço acima do botão */
-  margin-top: .5em;
+  margin-top: 0.5em;
 }
 
 button:hover {
