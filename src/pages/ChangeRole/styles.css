@@ -1,3 +1,14 @@
+.content {
+  grid-area: main;
+  overflow-y: auto;
+  padding: 20px 20px;
+  color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* min-height: 100vh; */
+}
+
 .container {
   margin: 0;
   padding: 0;
@@ -22,7 +33,6 @@ h1 {
 form {
   width: 100%; /* Ocupa a largura máxima do container pai */
   max-width: 400px; /* Define uma largura máxima para evitar que o formulário fique muito largo */
-  margin: 0;
 }
 
 #email {
