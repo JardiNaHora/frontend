@@ -15,7 +15,7 @@ import CardLista from "../../../components/Card";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-export const  NewReport = () => {
+export const NewReport = () => {
   const getDate = (date) => {
     const data = new Date(date);
     const dia = String(data.getDate()).padStart(2, "0"); // Garante dois dígitos para o dia
@@ -87,18 +87,9 @@ export const  NewReport = () => {
   };
 
   return (
-    <div>
+    <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="header">
-            <button
-              onClick={() => {
-                window.location.href = BACKEND_URL + "/logout";
-              }}
-            >
-              sair
-            </button>
-          </div>
           <div className="body">
             <React.Fragment>
               <h1>Relatório</h1>

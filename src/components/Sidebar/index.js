@@ -8,6 +8,8 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AirportShuttleIcon from "@mui/icons-material/AirportShuttle";
 import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -26,6 +28,11 @@ export const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
       href: "/home",
     },
     {
+      icon: <CalendarMonthIcon className="icon" />,
+      text: "Horários",
+      href: "/viagens",
+    },
+    {
       icon: <ContentPasteGoIcon className="icon" />,
       text: "Criar Relatório",
       href: "/relatorio-novo",
@@ -39,6 +46,11 @@ export const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
       icon: <ManageAccountsIcon className="icon" />,
       text: "Gerenciar Cadastro",
       href: "/alterar-cadastro",
+    },
+    {
+      icon: <EditCalendarIcon className="icon" />,
+      text: "Gerenciar Ocorrências",
+      href: "/ocorrencia",
     },
     {
       icon: <NotificationsIcon className="icon" />,

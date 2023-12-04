@@ -57,11 +57,6 @@ export const History = () => {
       });
   }, [dispatch, navigate]);
 
-  const logout = async () => {
-    // Redireciona o usuário para o endpoint de autenticação do Google no backend
-    window.location.href = BACKEND_URL + "/logout";
-  };
-
   const handleAnoChange = (event) => {
     event.preventDefault();
     setAnoSelecionado(event.target.value);
@@ -73,59 +68,52 @@ export const History = () => {
   };
 
   return (
-    <div>
+    <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="header">
-            <button
-              onClick={() => {
-                window.location.href = BACKEND_URL + "/logout";
-              }}
-            >
-              sair
-            </button>
-          </div>
-          <div className="body">
-            <label>
+          <div className="select-container">
+            <label className="title-container">
               Selecione aqui o histórico de viagens do mês e ano desejado:
             </label>
 
-            <select
-              id="selectAno"
-              name="ano"
-              onChange={handleAnoChange}
-              value={anoSelecionado}
-            >
-              <option value="">Ano</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-            </select>
+            <div className="botoes">
+              <select
+                id="selectAno"
+                name="ano"
+                onChange={handleAnoChange}
+                value={anoSelecionado}
+              >
+                <option value="">Ano</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+              </select>
 
-            <select
-              id="selectMes"
-              name="mes"
-              onChange={handleMesChange}
-              value={mesSelecionado}
-            >
-              <option value="">Mês</option>
-              <option value="1">Janeiro</option>
-              <option value="2">Fevereiro</option>
-              <option value="3">Março</option>
-              <option value="4">Abril</option>
-              <option value="5">Maio</option>
-              <option value="6">Junho</option>
-              <option value="7">Julho</option>
-              <option value="8">Agosto</option>
-              <option value="9">Setembro</option>
-              <option value="10">Outubro</option>
-              <option value="11">Novembro</option>
-              <option value="12">Dezembro</option>
-            </select>
-
-            <div className="historicoContainer">
-              <CardLista dados={viagens} />
+              <select
+                id="selectMes"
+                name="mes"
+                onChange={handleMesChange}
+                value={mesSelecionado}
+              >
+                <option value="">Mês</option>
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+              </select>
             </div>
+          </div>
+
+          <div className="historicoContainer">
+            <CardLista dados={viagens} />
           </div>
         </div>
       ) : (
