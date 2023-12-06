@@ -6,7 +6,7 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../store/slice";
 import { useNavigate } from "react-router-dom";
-import { startOfWeek, addDays, subDays, format } from "date-fns";
+import { startOfWeek, addDays, subDays, format, parse } from "date-fns";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -139,6 +139,10 @@ export const Travels = () => {
   };
   ////////////////////////////////////////
 
+  const parseData = (data) => {
+    var partesData = data.split("/");
+    return new Date(partesData[2], partesData[1] - 1, partesData[0]);
+  };
   function getWeekDays(date) {
     // Obter o início da semana (domingo) para a data fornecida ou a data atual se não for fornecida
     const startOfCurrentWeek = startOfWeek(date || new Date());
@@ -161,14 +165,13 @@ export const Travels = () => {
     for (let i = 0; i < 7; i++) {
       const day = addDays(startOfCurrentWeek, i);
       // Formatando a data para o formato desejado (você pode ajustar conforme necessário)
-      const formattedDate = format(day, "dd/MM/yyyy");
+      const formattedDate = format(day, "yyyy/MM/dd");
       // Adicionando o objeto ao array
       days.push({ dayOfWeek: i, dayName: dayName[i], date: formattedDate });
     }
-    // console.log("dias: ", days);
+
     return days;
   }
-  // console.log("semana passada: ", getWeekDays(new Date(2023, 10, 27)));
 
   const applySpecialOccurrences = (data, horarios) => {
     ocorrenciasEspeciais.forEach((ocorrencia) => {
@@ -182,7 +185,11 @@ export const Travels = () => {
         sentido,
       } = ocorrencia;
 
-      if (data >= new Date(dataInicial) && data <= new Date(dataFinal)) {
+      // verifica a data da ocorrencia e coloca entre os dias na tabela
+      if (
+        data >= new Date(parseData(dataInicial)) &&
+        data <= new Date(parseData(dataFinal))
+      ) {
         if (tipoOcorrencia === "adicionar viagens") {
           const existingTravel = horarios.find(
             (travel) =>
@@ -245,16 +252,11 @@ export const Travels = () => {
 
       const data = { ...dia, horarios };
       applySpecialOccurrences(new Date(dia.date), data.horarios);
-      console.log(data);
       return data;
     });
 
     setWeekDaysWithHorarios(updatedWeekDays);
   };
-
-  // useEffect(() => {
-  //   applyOccurrencesToWeekDays();
-  // }, []); // Certifique-se de ajustar as dependências conforme necessário
 
   const handlePrevWeek = () => {
     setCurrentDate(subDays(new Date(), 7));
@@ -295,7 +297,7 @@ export const Travels = () => {
             {weekDaysWithHorarios.map((dia) => (
               <th key={dia.date}>
                 <div>
-                  <p>{dia.date}</p>
+                  <p>{format(new Date(dia.date), "dd/MM/yyyy")}</p>
                   <p>{dia.dayName}</p>
                 </div>
               </th>
