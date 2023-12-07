@@ -84,51 +84,76 @@ export const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>
-        {isRegistering
-          ? "Registrar"
-          : isForgotPassword
-          ? "Esqueci minha senha"
-          : "Login"}
-      </h2>
-      {error && <div className="error-message">{error}</div>}
-      <div className="input-container">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+      <div className="left-container">
+        <img
+          src="../../assets/JardiNaHora-Icon.png"
+          alt="Logo"
+          className="logo"
         />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <h1>JardiNaHora</h1>
       </div>
-      {isRegistering ? (
-        <button onClick={handleRegister}>Registrar</button>
-      ) : isForgotPassword ? (
-        <button>Redefinir Senha</button>
-      ) : (
-        <button onClick={handleLogin}>Login</button>
-      )}
-      {!isRegistering && !isForgotPassword && (
-        <p>
-          Ainda não possui uma conta?{" "}
-          <span onClick={() => setIsRegistering(true)}>Registrar</span>
-        </p>
-      )}
-      {!isForgotPassword && (
-        <p>
-          Esqueceu sua senha?{" "}
-          <span onClick={() => setIsForgotPassword(true)}>
-            Esqueci minha senha
-          </span>
-        </p>
-      )}
-      {/* Botão para fazer login com o Google */}
-      <button onClick={handleLoginWithGoogle}>Logar com o Google</button>
+      <div className="right-container">
+        <h2 className="titulo">
+          {isRegistering
+            ? "Registrar"
+            : isForgotPassword
+            ? "Esqueci minha senha"
+            : "Login"}
+        </h2>
+        {error && <div className="error-message">{error}</div>}
+        <div className="input-container">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        {isRegistering ? (
+          <button onClick={handleRegister}>Registrar</button>
+        ) : isForgotPassword ? (
+          <button>Redefinir Senha</button>
+        ) : (
+          <button onClick={handleLogin}>Login</button>
+        )}
+        {!isRegistering && !isForgotPassword && (
+          <p>
+            Ainda não possui uma conta?{" "}
+            <span onClick={() => setIsRegistering(true)}>Registrar</span>
+          </p>
+        )}
+        {!isForgotPassword && (
+          <p>
+            Esqueceu sua senha?{" "}
+            <span onClick={() => setIsForgotPassword(true)}>
+              Esqueci minha senha
+            </span>
+          </p>
+        )}
+        {(isRegistering || isForgotPassword) && (
+          <p>
+            Já possui uma conta?{" "}
+            <span
+              onClick={() => {
+                setIsRegistering(false);
+                setIsForgotPassword(false);
+              }}
+            >
+              Logar
+            </span>
+          </p>
+        )}
+        {/* Botão para fazer login com o Google */}
+        <button onClick={handleLoginWithGoogle}>Logar com o Google</button>
+      </div>
     </div>
+
+    /////
   );
 };
