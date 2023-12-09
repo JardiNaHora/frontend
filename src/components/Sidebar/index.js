@@ -8,8 +8,8 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AirportShuttleIcon from "@mui/icons-material/AirportShuttle";
 import DepartureBoardIcon from "@mui/icons-material/DepartureBoard";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import EditCalendarIcon from '@mui/icons-material/EditCalendar';
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -35,7 +35,7 @@ export const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
     {
       icon: <ContentPasteGoIcon className="icon" />,
       text: "Criar Relatório",
-      href: "/relatorio-novo",
+      href: "/relatorio-criar",
     },
     {
       icon: <ContentPasteSearchIcon className="icon" />,
@@ -45,7 +45,7 @@ export const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
     {
       icon: <ManageAccountsIcon className="icon" />,
       text: "Gerenciar Cadastro",
-      href: "/alterar-cadastro",
+      href: "/gerenciar-cadastro",
     },
     {
       icon: <EditCalendarIcon className="icon" />,

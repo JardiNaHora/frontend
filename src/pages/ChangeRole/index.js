@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import "./styles.css";
+import logo from "../../assets/jardinahora.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../store/slice";
@@ -17,6 +18,7 @@ export const ChangeRole = () => {
   const [driver, setDriver] = useState(null);
   const [userFound, setUserFound] = useState(null);
   const [userRole, setUserRole] = useState("");
+  const [isSearched, setIsSearched] = useState(false);
 
   useEffect(() => {
     axios
@@ -56,12 +58,19 @@ export const ChangeRole = () => {
             // foto: "foto.png",
           });
           setUserFound(true);
+          setIsSearched(true);
         }
       })
+
       .catch((error) => {
         console.error("Usuário não cadastrado!", error);
         setUserFound(false);
       });
+  };
+
+  const handleLimpar = () => {
+    setUserFound(false);
+    setIsSearched(false);
   };
 
   const updateUserRole = () => {
@@ -86,8 +95,8 @@ export const ChangeRole = () => {
     <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <h1>Alterar Cadastro</h1>
-          <form onSubmit={handleSubmit} id="buscar-email">
+          <h1 className="change-role">Gerenciar Cadastro</h1>
+          <form onSubmit={handleSubmit} className="buscar-email">
             <input
               type="email"
               id="email"
@@ -97,47 +106,56 @@ export const ChangeRole = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <div className="botoes">
-              <input type="reset" value={"Limpar"} />
+              <input type="reset" value={"Limpar"} onClick={handleLimpar} />
               <input type="submit" value={"Buscar"} />
             </div>
           </form>
           <hr className="linha-horizontal" />
-
-          {userFound ? (
-            <div className="dados-adicionais">
-              <label htmlFor="nome">Nome Completo:</label>
-              <input
-                type="text"
-                id="nome"
-                value={driver.nomeCompleto}
-                readOnly
-              />
-              <label htmlFor="email-info">E-mail:</label>
-              <input
-                type="text"
-                id="email-info"
-                value={driver.email}
-                readOnly
-              />
-              <img
-                src={"frontend/src/pages/ChangeRole/foto.png"}
-                alt="Imagem do usuário"
-              />
-              <label htmlFor="tipo-usuario">Tipo de Usuário:</label>
-              <select
-                id="tipo-usuario"
-                onChange={(e) => setUserRole(e.target.value)}
-                required
-              >
-                <option value="USER">Usuário</option>
-                <option value="DRIVER">Motorista</option>
-                <option value="ADMIN">Administrador</option>
-              </select>
-              <input type="submit" value="Salvar" onClick={updateUserRole} />
-            </div>
-          ) : (
-            <h4>Usuário não encontrado</h4>
-          )}
+          {isSearched ? (
+            userFound ? (
+              <div className="dados-div">
+                <div className="dados-encontrados">
+                  <div>
+                    <label htmlFor="nome">Nome Completo:</label>
+                    <input
+                      type="text"
+                      id="nome"
+                      value={driver.nomeCompleto}
+                      readOnly
+                    />
+                    <label htmlFor="email-info">E-mail:</label>
+                    <input
+                      type="text"
+                      id="email-info"
+                      value={driver.email}
+                      readOnly
+                    />
+                  </div>
+                  <div className="img-div">
+                    <label>Foto:</label>
+                    <img
+                      className="img-driver"
+                      src={logo}
+                      alt="Imagem do usuário"
+                    />
+                  </div>
+                </div>
+                <label htmlFor="tipo-usuario">Tipo de Usuário:</label>
+                <select
+                  id="tipo-usuario"
+                  onChange={(e) => setUserRole(e.target.value)}
+                  required
+                >
+                  <option value="USER">Usuário</option>
+                  <option value="DRIVER">Motorista</option>
+                  <option value="ADMIN">Administrador</option>
+                </select>
+                <input type="submit" value="Salvar" onClick={updateUserRole} />
+              </div>
+            ) : (
+              <h4>Usuário não encontrado</h4>
+            )
+          ) : null}
         </div>
       ) : (
         <button

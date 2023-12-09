@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
-
+import logo from "../../assets/jardinahora.png";
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -85,15 +85,16 @@ export const Login = () => {
   return (
     <div className="login-container">
       <div className="left-container">
-        <img
-          src="../../assets/JardiNaHora-Icon.png"
-          alt="Logo"
-          className="logo"
-        />
-        <h1>JardiNaHora</h1>
+        <img src={logo} alt="Logo" className="logo" />
+        <h1 className="titulo">JardiNaHora</h1>
       </div>
       <div className="right-container">
-        <h2 className="titulo">
+        <div className="logo-div">
+          <img src={logo} alt="Logo" className="logo-login" />
+          JardiNaHora
+        </div>
+
+        <h2 className="action">
           {isRegistering
             ? "Registrar"
             : isForgotPassword

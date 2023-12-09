@@ -43,6 +43,15 @@ body {
   ); /* Altere as cores conforme necessário */
 }
 
+.logo {
+  height: 150px;
+}
+
+.titulo {
+  font-size: 4rem;
+  font-weight: 1000000;
+}
+
 .right-container {
   max-width: 40vw;
   height: 100vh;
@@ -73,7 +82,11 @@ body {
   text-decoration: underline;
   cursor: pointer;
 }
-.titulo {
+
+.logo-div {
+  display: none;
+}
+.action {
   margin-bottom: 3em;
   color: #006400;
 }
@@ -109,6 +122,21 @@ body {
 }
 
 @media screen and (max-width: 600px) {
+  .action {
+    margin-bottom: 1.5em;
+  }
+  .logo-div {
+    display: flex;
+    align-items: center;
+    color: black;
+    gap: 15px;
+    margin-bottom: 1em;
+    font-size: 25px;
+  }
+
+  .logo-login {
+    height: 80px;
+  }
   .left-container {
     display: none;
   }

@@ -6,7 +6,7 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../store/slice";
 import { useNavigate } from "react-router-dom";
-import { startOfWeek, addDays, subDays, format, parse } from "date-fns";
+import { startOfWeek, addDays, subDays, format } from "date-fns";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -137,8 +137,8 @@ export const Travels = () => {
     // Redireciona o usuário para o endpoint de autenticação do Google no backend
     window.location.href = BACKEND_URL + "/logout";
   };
-  ////////////////////////////////////////
 
+  // função que muda o formato da data em yyyy/MM/dd para que seja possivel comparar datas precisamente
   const parseData = (data) => {
     var partesData = data.split("/");
     return new Date(partesData[2], partesData[1] - 1, partesData[0]);
@@ -344,14 +344,18 @@ export const Travels = () => {
     <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="body">
-            <div className="navigation-buttons">
-              <button onClick={handlePrevWeek}>Semana Anterior</button>
-              <button onClick={handleToday}>Semana Atual</button>
-              <button onClick={handleNextWeek}>Próxima Semana</button>
-            </div>
-            {renderTable()}
+          <div className="navigation-btn">
+            <button type="button" onClick={handlePrevWeek}>
+              Semana Anterior
+            </button>
+            <button type="button" onClick={handleToday}>
+              Semana Atual
+            </button>
+            <button type="button" onClick={handleNextWeek}>
+              Próxima Semana
+            </button>
           </div>
+          {renderTable()}
         </div>
       ) : (
         <button

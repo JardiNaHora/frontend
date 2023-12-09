@@ -39,9 +39,9 @@ export const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/historico-viagens" element={<History />} />
-        <Route path="/relatorio-novo" element={<NewReport />} />
+        <Route path="/relatorio-criar" element={<NewReport />} />
         <Route path="/relatorio-historico" element={<ReportHistory />} />
-        <Route path="/alterar-cadastro" element={<ChangeRole />} />
+        <Route path="/gerenciar-cadastro" element={<ChangeRole />} />
         <Route path="/registrar-veiculo" element={<RegisterVehicle />} />
         <Route path="/ocorrencia" element={<GenerateOccurrence />} />
         <Route path="/viagens" element={<Travels />} />
