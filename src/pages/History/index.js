@@ -7,10 +7,16 @@ import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../store/slice";
 import { useNavigate } from "react-router-dom";
+import ReactDatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ptBR } from "date-fns/locale";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const History = () => {
+  registerLocale("ptBR", ptBR);
+
+  //dado mocado
   const viagens = [
     {
       motorista: "Toretto",
@@ -27,8 +33,7 @@ export const History = () => {
       numeroDeViagens: 18,
     },
   ];
-  const [anoSelecionado, setAnoSelecionado] = useState("");
-  const [mesSelecionado, setMesSelecionado] = useState("");
+  const [date, setDate] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -57,64 +62,33 @@ export const History = () => {
       });
   }, [dispatch, navigate]);
 
-  const handleAnoChange = (event) => {
-    event.preventDefault();
-    setAnoSelecionado(event.target.value);
-  };
-
-  const handleMesChange = (event) => {
-    event.preventDefault();
-    setMesSelecionado(event.target.value);
+  const logout = async () => {
+    // Redireciona o usuário para o endpoint de autenticação do Google no backend
+    window.location.href = BACKEND_URL + "/logout";
   };
 
   return (
     <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="select-container">
-            <label className="title-container">
-              Selecione aqui o histórico de viagens do mês e ano desejado:
-            </label>
+          <h1>Histórico de Viagens</h1>
+          <div className="input-data">
+            <ReactDatePicker
+              className="rdp"
+              selected={date}
+              onChange={(date) => setDate(date)}
+              placeholderText="Selecione o mês e ano"
+              dateFormat="MM/yyyy"
+              showMonthYearPicker
+              locale="ptBR"
+            />
+          </div>
 
-            <div className="botoes">
-              <select
-                id="selectAno"
-                name="ano"
-                onChange={handleAnoChange}
-                value={anoSelecionado}
-              >
-                <option value="">Ano</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-              </select>
-
-              <select
-                id="selectMes"
-                name="mes"
-                onChange={handleMesChange}
-                value={mesSelecionado}
-              >
-                <option value="">Mês</option>
-                <option value="1">Janeiro</option>
-                <option value="2">Fevereiro</option>
-                <option value="3">Março</option>
-                <option value="4">Abril</option>
-                <option value="5">Maio</option>
-                <option value="6">Junho</option>
-                <option value="7">Julho</option>
-                <option value="8">Agosto</option>
-                <option value="9">Setembro</option>
-                <option value="10">Outubro</option>
-                <option value="11">Novembro</option>
-                <option value="12">Dezembro</option>
-              </select>
+          {date ? (
+            <div className="historicoContainer">
+              <CardLista dados={viagens} />
             </div>
-          </div>
-
-          <div className="historicoContainer">
-            <CardLista dados={viagens} />
-          </div>
+          ) : null}
         </div>
       ) : (
         <button

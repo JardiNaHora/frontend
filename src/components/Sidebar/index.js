@@ -49,7 +49,7 @@ export const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
     },
     {
       icon: <EditCalendarIcon className="icon" />,
-      text: "Gerenciar Ocorrências",
+      text: "Registrar Ocorrência",
       href: "/ocorrencia",
     },
     {
@@ -59,7 +59,7 @@ export const Sidebar = ({ openSidebarToggle, OpenSidebar }) => {
     },
     {
       icon: <AirportShuttleIcon className="icon" />,
-      text: "Veículo",
+      text: "Registrar Veículo",
       href: "/registrar-veiculo",
     },
     {

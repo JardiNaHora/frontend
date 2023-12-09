@@ -49,7 +49,7 @@ label {
   width: 100%;
   padding: 8px;
   resize: vertical; /* Isso permite a redimensionamento apenas na direção vertical */
-  font-size: 14px;
+  font-size: 15px;
 }
 .botoes {
   display: flex;

@@ -42,10 +42,15 @@ export const RegisterVehicle = () => {
       });
   }, [dispatch, navigate]);
 
+  const handleClean = () => {
+    // Limpar os campos após o envio do formulário
+    setNomeVeiculo("");
+    setTipoVeiculo("");
+    setPlacaVeiculo("");
+    setMaxPassageiros("");
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Aqui você pode realizar as ações necessárias com os dados do formulário
     console.log("Dados do Veículo:", {
       nomeVeiculo,
       tipoVeiculo,
@@ -53,37 +58,37 @@ export const RegisterVehicle = () => {
       maxPassageiros,
     });
 
-    // Limpar os campos após o envio do formulário
-    setNomeVeiculo("");
-    setTipoVeiculo("");
-    setPlacaVeiculo("");
-    setMaxPassageiros("");
+    //TODO: mandar para o banco de dados
+    handleClean();
   };
 
   return (
     <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="body">
-            <h1>Registrar Veículo</h1>
+          <h1>Registrar Veículo</h1>
+          <div className="registrar-veiculo">
             <form onSubmit={handleSubmit} className="veiculo">
               <label htmlFor="nome">Nome do veículo: </label>
               <input
                 type="text"
                 value={nomeVeiculo}
                 onChange={(e) => setNomeVeiculo(e.target.value)}
+                required
               />
               <label htmlFor="tipo-veiculo">Tipo de veículo: </label>
               <input
                 type="text"
                 value={tipoVeiculo}
                 onChange={(e) => setTipoVeiculo(e.target.value)}
+                required
               />
               <label htmlFor="placa">Número da placa: </label>
               <input
                 type="text"
                 value={placaVeiculo}
                 onChange={(e) => setPlacaVeiculo(e.target.value)}
+                required
               />
               <label htmlFor="passageiros">
                 Número máximo de passageiros:{" "}
@@ -91,10 +96,11 @@ export const RegisterVehicle = () => {
               <input
                 type="number"
                 value={maxPassageiros}
-                onChange={(e) => setPlacaVeiculo(e.target.value)}
+                onChange={(e) => setMaxPassageiros(e.target.value)}
+                required
               />
-              <div>
-                <input type="reset" />
+              <div className="botoes">
+                <input type="reset" onClick={handleClean} />
                 <input type="submit" value="Registrar Veículo" />
               </div>
             </form>
