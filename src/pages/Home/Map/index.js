@@ -47,6 +47,7 @@ export const Map = () => {
   // Importa as variáveis do arquivo .env
   const THINGSPEAK_CHANNEL_ID = process.env.REACT_APP_THINGSPEAK_CHANNEL_ID;
   const THINGSPEAK_API_KEY = process.env.REACT_APP_THINGSPEAK_API_KEY;
+  const THINGSPEAK_WRITE_API_KEY = process.env.REACT_APP_THINGSPEAK_WRITE_API_KEY;
 
   // pega as coordenadas do usuário
   const getLocation = () => {
@@ -65,21 +66,22 @@ export const Map = () => {
           withCredentials: true,
         });
         if (responseUser.data.username === EMAIL_TEST) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            setJardineira({
-              lat: parseFloat(position.coords.latitude),
-              lng: parseFloat(position.coords.longitude),
-            });
-            setOrigin({
-              lat: parseFloat(position.coords.latitude),
-              lng: parseFloat(position.coords.longitude),
-            });
+          navigator.geolocation.getCurrentPosition(async function (position) {
+            const lat = parseFloat(position.coords.latitude);
+            const lng = parseFloat(position.coords.longitude);
+            setJardineira({ lat, lng });
+            setOrigin({ lat, lng });
+  
+            // Atualiza a localização no ThingSpeak
+            await axios.post(
+              `https://api.thingspeak.com/update?api_key=${THINGSPEAK_WRITE_API_KEY}&field1=${lat}&field2=${lng}`
+            );
           });
         } else {
           const response = await axios.get(
             `https://api.thingspeak.com/channels/${THINGSPEAK_CHANNEL_ID}/feeds.json?api_key=${THINGSPEAK_API_KEY}&results=1`
           );
-
+  
           setJardineira({
             lat: parseFloat(response.data.feeds[0].field1),
             lng: parseFloat(response.data.feeds[0].field2),
