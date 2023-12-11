@@ -101,7 +101,7 @@ export const Map = () => {
     // getLocation();
     // Configura o intervalo para chamar a função fetchData a cada 10 segundos
     // const intervalId = setInterval(fetchData, 10000);
-    const intervalId = setInterval(getLocation, 10000); // pega a posição do usuário
+    const intervalId = setInterval(getLocation, 5000); // pega a posição do usuário
 
     // Limpa o intervalo quando o componente for desmontado
     return () => clearInterval(intervalId);
