@@ -70,9 +70,9 @@ export const NewReport = () => {
       },
     ]);
 
-    if (reports && reports.length > 1) {
-      document.getElementById("btn-gerar-relatorio").disabled = false;
-    }
+    // if (reports && reports.length > 1) {
+    //   document.getElementById("btn-gerar-relatorio").disabled = false;
+    // }
     console.log(reports, reports.length > 1);
     setIsSearched(true);
   };
