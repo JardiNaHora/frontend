@@ -95,16 +95,19 @@ export const Map = () => {
         console.error("Erro ao obter informações da API", error);
       }
     };
+  // Chama a função fetchData imediatamente
+  fetchData();
+  getLocation();
 
-    // Chama a função fetchData imediatamente
-    fetchData();
-    // getLocation();
-    // Configura o intervalo para chamar a função fetchData a cada 10 segundos
-    // const intervalId = setInterval(fetchData, 10000);
-    const intervalId = setInterval(getLocation, 5000); // pega a posição do usuário
+  // Configura o intervalo para chamar a função fetchData a cada 10 segundos
+  const intervalIdFetchData = setInterval(fetchData, 5000);
+  const intervalIdGetLocation = setInterval(getLocation, 5000); // pega a posição do usuário
 
-    // Limpa o intervalo quando o componente for desmontado
-    return () => clearInterval(intervalId);
+  // Limpa o intervalo quando o componente for desmontado
+  return () => {
+    clearInterval(intervalIdFetchData);
+    clearInterval(intervalIdGetLocation);
+  };
   }, []);
 
   //teste
