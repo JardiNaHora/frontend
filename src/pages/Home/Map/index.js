@@ -16,6 +16,9 @@ const center = { lat: -3.869545, lng: -38.61568 }; // central overview
 const ifce = { lat: -3.871737, lng: -38.612374 }; // IFCE campus Maracanaú
 const metro = { lat: -3.867573, lng: -38.619985 }; // Estação Metrofor Virgílio Távora
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const EMAIL_TEST = process.env.REACT_APP_EMAIL_TEST;
+
 const mapStyles = [
   {
     featureType: "transit",
@@ -58,19 +61,34 @@ export const Map = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Usa as variáveis do arquivo .env na URL da requisição
-        const response = await axios.get(
-          `https://api.thingspeak.com/channels/${THINGSPEAK_CHANNEL_ID}/feeds.json?api_key=${THINGSPEAK_API_KEY}&results=1`
-        );
+        const responseUser = await axios.get(BACKEND_URL + "/home/auth", {
+          withCredentials: true,
+        });
+        if (responseUser.data.username === EMAIL_TEST) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            setJardineira({
+              lat: parseFloat(position.coords.latitude),
+              lng: parseFloat(position.coords.longitude),
+            });
+            setOrigin({
+              lat: parseFloat(position.coords.latitude),
+              lng: parseFloat(position.coords.longitude),
+            });
+          });
+        } else {
+          const response = await axios.get(
+            `https://api.thingspeak.com/channels/${THINGSPEAK_CHANNEL_ID}/feeds.json?api_key=${THINGSPEAK_API_KEY}&results=1`
+          );
 
-        setJardineira({
-          lat: parseFloat(response.data.feeds[0].field1),
-          lng: parseFloat(response.data.feeds[0].field2),
-        });
-        setOrigin({
-          lat: parseFloat(response.data.feeds[0].field1),
-          lng: parseFloat(response.data.feeds[0].field2),
-        });
+          setJardineira({
+            lat: parseFloat(response.data.feeds[0].field1),
+            lng: parseFloat(response.data.feeds[0].field2),
+          });
+          setOrigin({
+            lat: parseFloat(response.data.feeds[0].field1),
+            lng: parseFloat(response.data.feeds[0].field2),
+          });
+        }
       } catch (error) {
         console.error("Erro ao obter informações da API", error);
       }
@@ -78,7 +96,7 @@ export const Map = () => {
 
     // Chama a função fetchData imediatamente
     fetchData();
-    getLocation();
+    // getLocation();
     // Configura o intervalo para chamar a função fetchData a cada 10 segundos
     // const intervalId = setInterval(fetchData, 10000);
     const intervalId = setInterval(getLocation, 10000); // pega a posição do usuário
@@ -112,6 +130,9 @@ export const Map = () => {
   }, [response]);
   //
 
+  // Novo estado para controlar a sobreposição
+  const [overlay, setOverlay] = useState(true);
+
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
   return (
@@ -135,6 +156,17 @@ export const Map = () => {
         }}
         clickableIcons={false}
       >
+        {overlay && (
+          <div
+            style={{
+              backgroundColor: "transparent",
+              position: "absolute",
+              height: "100%",
+              width: "100%",
+            }}
+            onClick={() => setOverlay(false)}
+          />
+        )}
         {jardineira && destination && (
           <DirectionsService
             options={directionsServiceOptions}
