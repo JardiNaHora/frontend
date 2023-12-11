@@ -130,9 +130,6 @@ export const Map = () => {
   }, [response]);
   //
 
-  // Novo estado para controlar a sobreposição
-  const [overlay, setOverlay] = useState(true);
-
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
   return (
@@ -156,17 +153,6 @@ export const Map = () => {
         }}
         clickableIcons={false}
       >
-        {overlay && (
-          <div
-            style={{
-              backgroundColor: "transparent",
-              position: "absolute",
-              height: "100%",
-              width: "100%",
-            }}
-            onClick={() => setOverlay(false)}
-          />
-        )}
         {jardineira && destination && (
           <DirectionsService
             options={directionsServiceOptions}
