@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ReactDatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import ptBR from "date-fns/locale/pt-BR";
+import { ptBR } from "date-fns/locale";
 
 import "./styles.css";
 
@@ -74,6 +74,17 @@ export const GenerateOccurrence = () => {
     window.location.href = BACKEND_URL + "/logout";
   };
 
+  const handleClean = () => {
+    // Limpar os campos após o envio do formulário
+    setStartDate("");
+    setEndDate("");
+    setMotivation("");
+    setTravels("");
+    setEndTime("");
+    setStartTime("");
+    setDirection("");
+    setOcorrencia(null);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -105,25 +116,16 @@ export const GenerateOccurrence = () => {
           },
         });
 
-    console.log(ocorrencia);
-
-    // Limpar os campos após o envio do formulário
-    setStartDate("");
-    setEndDate("");
-    setMotivation("");
-    setTravels("");
-    setEndTime("");
-    setStartTime("");
-    setDirection("");
-    setOcorrencia(null);
+    // console.log(ocorrencia);
+    handleClean();
   };
 
   return (
     <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="body">
-            <h1>Registrar Ocorrência</h1>
+          <h1>Registrar Ocorrência</h1>
+          <div className="div-ocorrencia">
             <label>Tipo de ocorrência</label>
             <select onChange={(e) => setOccurrenceType(e.target.value)}>
               <option value={"Add Travels"}>Adicionar viagens</option>
@@ -200,7 +202,7 @@ export const GenerateOccurrence = () => {
                 onChange={(e) => setMotivation(e.target.value)}
               ></textarea>
               <div className="botoes">
-                <input type="reset" />
+                <input type="reset" onClick={handleClean} />
                 <input type="submit" value={"Gerar"} />
               </div>
             </form>

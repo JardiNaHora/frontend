@@ -48,14 +48,6 @@ export const Map = () => {
   // pega as coordenadas do usuário
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition(function (position) {
-      // setJardineira({
-      //   lat: parseFloat(position.coords.latitude),
-      //   lng: parseFloat(position.coords.longitude),
-      // });
-      // setOrigin({
-      //   lat: parseFloat(position.coords.latitude),
-      //   lng: parseFloat(position.coords.longitude),
-      // });
       setUserLocation({
         lat: parseFloat(position.coords.latitude),
         lng: parseFloat(position.coords.longitude),
@@ -85,7 +77,7 @@ export const Map = () => {
     };
 
     // Chama a função fetchData imediatamente
-    // fetchData();
+    fetchData();
     getLocation();
     // Configura o intervalo para chamar a função fetchData a cada 10 segundos
     // const intervalId = setInterval(fetchData, 10000);
@@ -137,6 +129,9 @@ export const Map = () => {
           rotateControl: false,
           fullscreenControl: false,
           zoomControl: false,
+          //minimo e maximo de zoom
+          // minZoom: 15,
+          // maxZoom: 17,
         }}
         clickableIcons={false}
       >
@@ -157,7 +152,7 @@ export const Map = () => {
         <Marker
           position={userLocation}
           icon={"https://img.icons8.com/?size=24&id=37170&format=png"}
-          options={{ label: { text: "Paulin", className: "marker" } }}
+          options={{ label: { text: "Usuário", className: "marker" } }}
         />
         https://img.icons8.com/?size=50&id=37170&format=png
         <Marker

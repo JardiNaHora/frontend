@@ -51,6 +51,8 @@ export const NewReport = () => {
 
   const buscar = (e) => {
     e.preventDefault();
+
+    //TODO: trazer os dados do banco de dados
     setReports([
       {
         motorista: "Toretto",
@@ -68,9 +70,10 @@ export const NewReport = () => {
       },
     ]);
 
-    // if (reports.lenght < 1) {
-    //   document.getElementById("btn-gerar-relatorio").disabled = false;
-    // }
+    if (reports && reports.length > 1) {
+      document.getElementById("btn-gerar-relatorio").disabled = false;
+    }
+    console.log(reports, reports.length > 1);
     setIsSearched(true);
   };
 
@@ -78,7 +81,16 @@ export const NewReport = () => {
     e.preventDefault();
     gerarPDFReports(formulario, reports);
     setReportToBeSaved({ formulario, reports });
-    console.log(reports, reportToBeSaved);
+    // TODO: mandar o relatorio para o banco de dados e apagar os dados da pagina
+  };
+
+  const handleClean = () => {
+    document.getElementById("btn-gerar-relatorio").disabled = true;
+    setReportToBeSaved(null);
+    setIsSearched(false);
+    setStartDate(null);
+    setEndDate(null);
+    setObs("");
   };
 
   const logout = async () => {
@@ -92,7 +104,7 @@ export const NewReport = () => {
         <div className="container">
           <div className="body">
             <React.Fragment>
-              <h1>Relatório</h1>
+              <h1>Criar Relatório</h1>
               <div className="datas">
                 <div className="data data-inicio">
                   <label htmlFor="start">Data de inicio: </label>
@@ -140,14 +152,14 @@ export const NewReport = () => {
                   onChange={(e) => setObs(e.target.value)}
                 ></textarea>
                 <div className="botoes">
-                  <input type="reset" />
+                  <input type="reset" onClick={handleClean} />
                   <input type="submit" value={"Buscar"} />
                   <input
                     type="button"
                     id="btn-gerar-relatorio"
                     value={"Gerar Relatório"}
                     onClick={handleSubmit}
-                    // disabled
+                    disabled
                   />
                 </div>
               </form>

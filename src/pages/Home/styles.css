@@ -1,4 +1,4 @@
-.content {
+/* .content {
   grid-area: main;
   overflow-y: auto;
   padding: 20px 20px;
@@ -6,13 +6,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* min-height: 100vh; */
-}
+  min-height: 100vh;
+} */
 
 .container {
-  max-width: 960px;
+  /* max-width: 960px;
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto; */
+  height: 100%;
+}
+
+.MuiTypography-root {
+  color: black;
+  font-size: 1.1rem;
 }
 
 .title {

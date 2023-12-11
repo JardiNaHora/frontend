@@ -8,15 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 // Importando os componentes do material-ui
 import { styled } from "@mui/material/styles";
-import {
-  AppBar,
-  Toolbar,
-  Button,
-  Typography,
-  Grid,
-  Paper,
-  Box,
-} from "@mui/material";
+import { Button, Typography, Grid, Paper, Box } from "@mui/material";
 
 import "./styles.css";
 
@@ -24,13 +16,13 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Criando um hook para definir os estilos personalizados
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(2),
+  padding: theme.spacing(1.2),
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 
 const StyledMap = styled(Box)(({ theme }) => ({
-  height: "300px",
+  height: "50vh",
   width: "100%",
   border: "1px solid #ccc",
   borderRadius: "4px",
@@ -72,36 +64,29 @@ export const Home = () => {
     <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="h6" className={"title"}>
-                Olá, {user}!
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               <StyledPaper>
-                <Typography variant="h5">🚐 Sentido: Campus → Metrô</Typography>
+                <Typography variant="p">🚐 Sentido: Campus → Metrô</Typography>
               </StyledPaper>
             </Grid>
             <Grid item xs={12}>
               <StyledPaper>
-                <StyledMap>
+                <StyledMap className="mapa">
                   <Map />
                 </StyledMap>
               </StyledPaper>
             </Grid>
             <Grid item xs={12} sm={6}>
               <StyledPaper>
-                <Typography variant="h5">
+                <Typography variant="p">
                   🕒Partida: 7:40 / 🕒Chegada: 7:55
                 </Typography>
               </StyledPaper>
             </Grid>
             <Grid item xs={12} sm={6}>
               <StyledPaper>
-                <Typography variant="h5">🚐 Viagem: 3 de 4</Typography>
+                <Typography variant="p">🚐 Viagem: 3 de 4</Typography>
               </StyledPaper>
             </Grid>
           </Grid>
