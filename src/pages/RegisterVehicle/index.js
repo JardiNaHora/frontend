@@ -42,17 +42,27 @@ export const RegisterVehicle = () => {
       });
   }, [dispatch, navigate]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const postVehicle = () => {
+    axios
+      .post(
+        BACKEND_URL + `/vehicle`,
+        {
+          type: tipoVeiculo,
+          name: nomeVeiculo,
+          plate: placaVeiculo,
+          passengers: maxPassageiros,
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Não foi possível adicionar o veículo!", error);
+      });
+  };
 
-    // Aqui você pode realizar as ações necessárias com os dados do formulário
-    console.log("Dados do Veículo:", {
-      nomeVeiculo,
-      tipoVeiculo,
-      placaVeiculo,
-      maxPassageiros,
-    });
-
+  const handleClean = () => {
     // Limpar os campos após o envio do formulário
     setNomeVeiculo("");
     setTipoVeiculo("");
@@ -60,30 +70,48 @@ export const RegisterVehicle = () => {
     setMaxPassageiros("");
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log("Dados do Veículo:", {
+    //   nomeVeiculo,
+    //   tipoVeiculo,
+    //   placaVeiculo,
+    //   maxPassageiros,
+    // });
+
+    //Envia para o banco de dados
+    postVehicle();
+    //Reseta os valores para evitar copias no banco de dados por engano
+    handleClean();
+  };
+
   return (
     <div className="content">
       {isAuthenticated ? (
         <div className="container">
-          <div className="body">
-            <h1>Registrar Veículo</h1>
+          <h1>Registrar Veículo</h1>
+          <div className="registrar-veiculo">
             <form onSubmit={handleSubmit} className="veiculo">
               <label htmlFor="nome">Nome do veículo: </label>
               <input
                 type="text"
                 value={nomeVeiculo}
                 onChange={(e) => setNomeVeiculo(e.target.value)}
+                required
               />
               <label htmlFor="tipo-veiculo">Tipo de veículo: </label>
               <input
                 type="text"
                 value={tipoVeiculo}
                 onChange={(e) => setTipoVeiculo(e.target.value)}
+                required
               />
               <label htmlFor="placa">Número da placa: </label>
               <input
                 type="text"
                 value={placaVeiculo}
                 onChange={(e) => setPlacaVeiculo(e.target.value)}
+                required
               />
               <label htmlFor="passageiros">
                 Número máximo de passageiros:{" "}
@@ -91,10 +119,11 @@ export const RegisterVehicle = () => {
               <input
                 type="number"
                 value={maxPassageiros}
-                onChange={(e) => setPlacaVeiculo(e.target.value)}
+                onChange={(e) => setMaxPassageiros(parseInt(e.target.value))}
+                required
               />
-              <div>
-                <input type="reset" />
+              <div className="botoes">
+                <input type="reset" onClick={handleClean} />
                 <input type="submit" value="Registrar Veículo" />
               </div>
             </form>
