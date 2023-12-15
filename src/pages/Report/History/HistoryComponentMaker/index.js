@@ -24,7 +24,7 @@ const ComponentMaker = ({ dado, index }) => {
           <h5>{"Número de viagens do relatório: " + dado.reports.length}</h5>
         </div>
         <div className="btn-visualizar">
-          <input type="button" value="Visualizar PFD" onClick={gerarPDF} />
+          <input type="button" value="Visualizar PDF" onClick={gerarPDF} />
         </div>
       </div>
     </div>

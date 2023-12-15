@@ -89,6 +89,13 @@ export const ReportHistory = () => {
     setIsSearched(true);
   };
 
+  const handleClean = (e) => {
+    e.preventDefault();
+    setReportsList(null);
+
+    setIsSearched(false);
+  };
+
   useEffect(() => {
     axios
       .get(BACKEND_URL + "/home/auth", { withCredentials: true })
@@ -126,7 +133,7 @@ export const ReportHistory = () => {
             <form onSubmit={handleSubmit}>
               <input type="text" placeholder="Buscar" id="buscar" />
               <div className="botoes">
-                <input type="reset" />
+                <input type="reset" onClick={handleClean} />
                 <input type="submit" value="Buscar" />
               </div>
             </form>

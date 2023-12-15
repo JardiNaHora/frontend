@@ -46,7 +46,7 @@ form {
   flex-grow: 1; /* Isso faz com que o campo de busca ocupe todo o espaço disponível */
   max-width: 100%;
   margin-bottom: 0;
-  height: 36px;
+  padding: 5px;
 }
 
 .relatorios {
@@ -83,6 +83,7 @@ form {
 
 .btn-visualizar input {
   margin-bottom: 0;
+  padding: 4px;
 }
 
 /* Adicionando regras para tornar o layout responsivo */

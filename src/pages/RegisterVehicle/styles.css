@@ -1,20 +1,34 @@
+.registrar-veiculo {
+  max-width: 400px; /* Ajuste conforme necessário */
+  width: 100%;
+  margin: 0 auto;
+}
+
 .veiculo {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 40%;
 }
-.registrar-veiculo input {
-  font-size: 15px;
-  text-align: center;
-  padding: 4px;
-  margin-bottom: 8px;
+
+label {
+  margin-bottom: 6px;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 10px;
   width: 100%;
-}
-/*desnecessario pois ja estava em outro estilo*/
-/* .botoes input {
-  margin-left: 0.4rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 5px;
+  box-sizing: border-box;
   font-size: 15px;
-} */
+}
+
+.botoes {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Adicione media queries conforme necessário para tornar a página realmente responsiva */
+@media (max-width: 600px) {
+  .registrar-veiculo {
+    max-width: 100%;
+  }
+}

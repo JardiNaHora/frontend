@@ -49,7 +49,7 @@ body {
 
 .titulo {
   font-size: 4rem;
-  font-weight: 1000000;
+  font-weight: 100000;
 }
 
 .right-container {
@@ -87,7 +87,7 @@ body {
   display: none;
 }
 .action {
-  margin-bottom: 3em;
+  margin-bottom: 8vh;
   color: #006400;
 }
 
@@ -143,5 +143,11 @@ body {
   .right-container {
     width: 100vw;
     max-width: 100vw;
+  }
+}
+
+@media screen and (max-height: 500px) {
+  .titulo {
+    font-size: 2.5rem;
   }
 }
