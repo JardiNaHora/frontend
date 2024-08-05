@@ -42,6 +42,26 @@ export const RegisterVehicle = () => {
       });
   }, [dispatch, navigate]);
 
+  const postVehicle = () => {
+    axios
+      .post(
+        BACKEND_URL + `/vehicle`,
+        {
+          type: tipoVeiculo,
+          name: nomeVeiculo,
+          plate: placaVeiculo,
+          passengers: maxPassageiros,
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Não foi possível adicionar o veículo!", error);
+      });
+  };
+
   const handleClean = () => {
     // Limpar os campos após o envio do formulário
     setNomeVeiculo("");
@@ -49,16 +69,19 @@ export const RegisterVehicle = () => {
     setPlacaVeiculo("");
     setMaxPassageiros("");
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Dados do Veículo:", {
-      nomeVeiculo,
-      tipoVeiculo,
-      placaVeiculo,
-      maxPassageiros,
-    });
+    // console.log("Dados do Veículo:", {
+    //   nomeVeiculo,
+    //   tipoVeiculo,
+    //   placaVeiculo,
+    //   maxPassageiros,
+    // });
 
-    //TODO: mandar para o banco de dados
+    //Envia para o banco de dados
+    postVehicle();
+    //Reseta os valores para evitar copias no banco de dados por engano
     handleClean();
   };
 
@@ -96,7 +119,7 @@ export const RegisterVehicle = () => {
               <input
                 type="number"
                 value={maxPassageiros}
-                onChange={(e) => setMaxPassageiros(e.target.value)}
+                onChange={(e) => setMaxPassageiros(parseInt(e.target.value))}
                 required
               />
               <div className="botoes">
