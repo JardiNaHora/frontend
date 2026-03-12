@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import authReducer from './store/slice';
 import App from './App';
+import 'leaflet/dist/leaflet.css';
 
 const store = configureStore({
   reducer: {

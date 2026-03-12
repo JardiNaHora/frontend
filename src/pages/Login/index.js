@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./styles.css";
 import logo from "../../assets/jardinahora.png";
+
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +16,7 @@ export const Login = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:8080";
 
   // Função para iniciar o login com o Google
   const handleLoginWithGoogle = () => {
@@ -39,29 +40,33 @@ export const Login = () => {
   };
 
   const handleLogin = async () => {
-    // Implemente a lógica de login aqui. Após o login bem-sucedido, defina o estado "authenticated" como true.
-    // Você pode usar um serviço de autenticação ou verificar um token de autenticação, por exemplo.
+    setError(null);
 
-    try {
-      // Realize o login, por exemplo, enviando uma solicitação ao seu backend com as credenciais do usuário.
-      const response = await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify({ username: "usuário", password: "senha" }), // Substitua por suas credenciais
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.status === 200) {
-        // Login bem-sucedido, defina o estado "authenticated" como true.
-        setAuthenticated(true);
-        navigate("/home");
-      } else {
-        console.error("Erro no login:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Erro ao fazer login:", error);
+    if (!email || !password) {
+      setError("Informe e-mail e senha.");
+      return;
     }
+
+    // Para evitar problemas de CORS com redirecionamento e cookies,
+    // usamos um submit de formulário tradicional para o backend.
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = `${BACKEND_URL}/sign-in`;
+
+    const usernameInput = document.createElement("input");
+    usernameInput.type = "hidden";
+    usernameInput.name = "username";
+    usernameInput.value = email;
+    form.appendChild(usernameInput);
+
+    const passwordInput = document.createElement("input");
+    passwordInput.type = "hidden";
+    passwordInput.name = "password";
+    passwordInput.value = password;
+    form.appendChild(passwordInput);
+
+    document.body.appendChild(form);
+    form.submit();
   };
 
   // Função para obter informações do usuário após o login bem-sucedido
@@ -154,7 +159,5 @@ export const Login = () => {
         <button onClick={handleLoginWithGoogle}>Logar com o Google</button>
       </div>
     </div>
-
-    /////
   );
 };

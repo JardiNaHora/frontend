@@ -10,9 +10,57 @@
   
 .header-right {
     display: flex;
-    cursor: pointer;
+    align-items: center;
 }
 
 .menu-icon {
     display: none;
+}
+
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.avatar-wrapper {
+    position: relative;
+}
+
+.avatar-badge {
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #d32f2f;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0 4px;
+    font-size: 0.65rem;
+    line-height: 1.1;
+    min-width: 16px;
+    text-align: center;
+    box-shadow: 0 0 0 2px #111827; /* borda para destacar no header escuro */
+}
+
+.user-menu-dropdown {
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background-color: #ffffff;
+    color: #111827;
+    min-width: 160px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.user-menu-item {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+.user-menu-item:hover {
+    background-color: #f3f4f6;
 }

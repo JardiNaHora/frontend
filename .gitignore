@@ -1,24 +1,31 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+## Arquivos ignorados padrão do Create React App
 
-# dependencies
-/node_modules
+# dependências
+node_modules/
 /.pnp
 .pnp.js
 
-# testing
-/coverage
+# testes
+coverage/
 
-# production
+# build de produção
+build/
 
-
-# misc
-.DS_Store
+# arquivos de ambiente (não versionar segredos)
 .env
 .env.local
+.env.development
 .env.development.local
 .env.test.local
 .env.production.local
 
+# IDE / SO
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
